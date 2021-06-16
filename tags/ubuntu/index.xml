@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ubuntu on 既明勿昧</title>
+    <link>https://genway.top/tags/ubuntu/</link>
+    <description>Recent content in Ubuntu on 既明勿昧</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-Hans-CN</language>
+    <copyright>© 2021 Genway. All rights reserved.</copyright>
+    <lastBuildDate>Mon, 14 Jun 2021 20:25:41 +0800</lastBuildDate><atom:link href="https://genway.top/tags/ubuntu/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Git 的安装和使用</title>
+      <link>https://genway.top/blog/git-practice/</link>
+      <pubDate>Mon, 14 Jun 2021 20:25:41 +0800</pubDate>
+      
+      <guid>https://genway.top/blog/git-practice/</guid>
+      <description>&lt;p&gt;Git 是一个开源的分布式版本控制系统，也是内容管理系统(CMS)和工作管理系统，适用于各类项目。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Atom 的安装和使用</title>
+      <link>https://genway.top/blog/atom-practice/</link>
+      <pubDate>Mon, 14 Jun 2021 15:38:27 +0800</pubDate>
+      
+      <guid>https://genway.top/blog/atom-practice/</guid>
+      <description>&lt;p&gt;Atom 是 Github 专门为程序员推出的一个跨平台文本编辑器，丰富的插件几乎能够满足所有 web 开发需求。
+。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Ubuntu 安装、设置与使用</title>
+      <link>https://genway.top/blog/ubuntu-practice/</link>
+      <pubDate>Mon, 14 Jun 2021 10:36:43 +0800</pubDate>
+      
+      <guid>https://genway.top/blog/ubuntu-practice/</guid>
+      <description>&lt;p&gt;Ubuntu 是一个以桌面应用为主的 Linux 操作系统，因其开源软件之属性而获得广泛应用。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>博客 on 既明勿昧</title>
+    <link>https://genway.top/blog/</link>
+    <description>Recent content in 博客 on 既明勿昧</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-Hans-CN</language>
+    <copyright>© 2021 Genway. All rights reserved.</copyright>
+    <lastBuildDate>Wed, 16 Jun 2021 09:40:37 +0800</lastBuildDate><atom:link href="https://genway.top/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>静态网站的托管</title>
+      <link>https://genway.top/blog/static-site-deploy/</link>
+      <pubDate>Wed, 16 Jun 2021 09:40:37 +0800</pubDate>
+      
+      <guid>https://genway.top/blog/static-site-deploy/</guid>
+      <description>&lt;p&gt;Github 和 Gitee 都可以托管静态网站，通常有两种方式：项目主页和个人主页，每个账号可以建多个项目主页，但用户个人主页只能拥有一个。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Hugo 主题制作笔记</title>
+      <link>https://genway.top/blog/hugo-theme-make/</link>
+      <pubDate>Mon, 14 Jun 2021 21:20:05 +0800</pubDate>
+      
+      <guid>https://genway.top/blog/hugo-theme-make/</guid>
+      <description>&lt;p&gt;Hugo 主题制作有不少特点，特别是强大的内置程序，只需要很少的代码，就能实现强大的功能。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>安全外壳协议 SSH</title>
+      <link>https://genway.top/blog/ssh/</link>
+      <pubDate>Mon, 14 Jun 2021 20:38:57 +0800</pubDate>
+      
+      <guid>https://genway.top/blog/ssh/</guid>
+      <description>&lt;p&gt;SSH 为 Secure Shell 的缩写，由 IETF 的网络小组（Network Working Group）所制定；SSH 为建立在应用层基础上的安全协议。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Git 的安装和使用</title>
+      <link>https://genway.top/blog/git-practice/</link>
+      <pubDate>Mon, 14 Jun 2021 20:25:41 +0800</pubDate>
+      
+      <guid>https://genway.top/blog/git-practice/</guid>
+      <description>&lt;p&gt;Git 是一个开源的分布式版本控制系统，也是内容管理系统(CMS)和工作管理系统，适用于各类项目。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Atom 的安装和使用</title>
+      <link>https://genway.top/blog/atom-practice/</link>
+      <pubDate>Mon, 14 Jun 2021 15:38:27 +0800</pubDate>
+      
+      <guid>https://genway.top/blog/atom-practice/</guid>
+      <description>&lt;p&gt;Atom 是 Github 专门为程序员推出的一个跨平台文本编辑器，丰富的插件几乎能够满足所有 web 开发需求。
+。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Ubuntu 安装、设置与使用</title>
+      <link>https://genway.top/blog/ubuntu-practice/</link>
+      <pubDate>Mon, 14 Jun 2021 10:36:43 +0800</pubDate>
+      
+      <guid>https://genway.top/blog/ubuntu-practice/</guid>
+      <description>&lt;p&gt;Ubuntu 是一个以桌面应用为主的 Linux 操作系统，因其开源软件之属性而获得广泛应用。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Markdown 语法示例</title>
+      <link>https://genway.top/blog/markdown-%E8%AF%AD%E6%B3%95%E7%A4%BA%E4%BE%8B/</link>
+      <pubDate>Sat, 12 Jun 2021 19:20:00 +0800</pubDate>
+      
+      <guid>https://genway.top/blog/markdown-%E8%AF%AD%E6%B3%95%E7%A4%BA%E4%BE%8B/</guid>
+      <description>&lt;p&gt;This article offers a sample of basic Markdown syntax that can be used in Hugo content files, also it shows whether basic HTML elements are decorated with CSS in a Hugo theme.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>初中毕业照</title>
+      <link>https://genway.top/blog/middle-school-graduate/</link>
+      <pubDate>Wed, 10 Mar 2021 14:17:52 +0800</pubDate>
+      
+      <guid>https://genway.top/blog/middle-school-graduate/</guid>
+      <description>&lt;p&gt;浙江省上虞中学1983届初中一班毕业照。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Hugo-静态网站生成器</title>
+      <link>https://genway.top/blog/static-site-generator/</link>
+      <pubDate>Mon, 01 Feb 2021 16:51:05 +0800</pubDate>
+      
+      <guid>https://genway.top/blog/static-site-generator/</guid>
+      <description>&lt;p&gt;Hugo 是由 Go 语言实现的静态网站生成器，简单、易用、高效、易扩展、快速部署。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

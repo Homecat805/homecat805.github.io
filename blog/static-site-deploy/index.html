@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      
+<meta charset="utf-8" />
+
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+
+
+<title>静态网站的托管 ｜ 既明勿昧</title>
+
+
+
+<link rel="shortcut icon " type="images/x-icon" href="/images/favicon.ico">
+
+<link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" />
+
+
+
+
+<link rel="stylesheet" type="text/css" media="screen" href="https://genway.top/css/main.css">
+</head>
+   <body>
+      
+      <header id="header"><div id="title">
+   <a id="logo" href="/">既明勿昧</a>
+   <a id="menu-toggle" class="burger">
+      <span></span>
+      <span></span>
+      <span></span>
+   </a>
+</div>
+
+<div id="menu-content">
+   <ul class="menu">
+      
+      
+         
+         
+         
+         
+		<li class="menu-item">
+			<a class="" href="/">首页</a>
+		</li>
+		
+         
+         
+         
+         
+		<li class="menu-item">
+			<a class="active" href="/blog/">博客</a>
+		</li>
+		
+	</ul>
+</div>
+</header>
+      
+      <div id="container">
+         
+         <div id="stage">
+   <main><div id="breadcrumb">
+   <ol>
+     
+      
+         
+      
+         
+      
+      <li>
+         <a href="https://genway.top/">首页</a>
+      </li>
+   
+      
+      <li>
+         <a href="https://genway.top/blog/">博客</a>
+      </li>
+   
+      
+      <li>
+         <a href="https://genway.top/blog/static-site-deploy/">静态网站的托管</a>
+      </li>
+   
+   </ol>
+   
+</div>
+<div class="container"><article id="content">
+	<header class="content-header">
+		<p class="title">静态网站的托管</p>
+		<p>
+			<span>
+				
+					Homecat
+				
+			</span>
+		</p>
+	</header>
+	<div class="markdown"><p>Github 和 Gitee 都可以托管静态网站，通常有两种方式：项目主页和个人主页，每个账号可以建多个项目主页，但用户个人主页只能拥有一个。</p>
+<h2 id="github">Github</h2>
+<p>这里介绍将 Hugo 生成的静态静态网站托管到 Github 的步骤。</p>
+<h4 id="建立-github-仓库">建立 Github 仓库</h4>
+<p>在 Github 上建立一个仓库，命名为 <code>&lt;用户名&gt;.github.io</code>，并且将仓库设置为 public 。</p>
+<h4 id="建立-hugo-实例">建立 Hugo 实例</h4>
+<p>在本地，利用安装好的 Hugo 静态网页生成器生成一个静态网页实例。Hugo 的安装和使用请参见其他文章，这里不再赘述。</p>
+<pre><code>hugo new site &lt;实例名&gt;
+</code></pre>
+<h4 id="引入主题">引入主题</h4>
+<pre><code>cd &lt;实例名&gt;
+git submodule add &lt;主题地址&gt;
+</code></pre>
+<p>引入主题后，调整配置文件和内容。</p>
+<h4 id="预览">预览</h4>
+<pre><code>hugo server
+</code></pre>
+<h4 id="添加子模块">添加子模块</h4>
+<pre><code>git submodule add git@github.com:&lt;用户名&gt;/&lt;用户名&gt;.github.io.git public
+</code></pre>
+<h4 id="发布网站">发布网站</h4>
+<p>在本地新建和编辑 <code>deploy.sh</code> 文件，内容如下：</p>
+<pre><code>#deploy.sh
+#!/bin/bash
+
+echo -e &quot;33[0;32mDeploying updates to GitHub...33[0m&quot;
+
+# Build the project.
+hugo # if using a theme, replace by `hugo -t &lt;yourtheme&gt;`
+
+# Go To Public folder
+cd public
+# Add changes to git.
+git add -A
+
+# Commit changes.
+msg=&quot;rebuilding site `date`&quot;
+if [ $# -eq 1 ]
+  then msg=&quot;$1&quot;
+fi
+git commit -m &quot;$msg&quot;
+
+# Push source and build repos.
+git push -u origin main
+
+# Come Back
+cd ..
+
+</code></pre>
+<p>执行文件，即可将本地 Hugo 生成的静态网页发布到 Github 了，并且可以通过 <code>https://&lt;用户名&gt;.github.io</code> 访问。</p>
+<pre><code>deploy.sh &quot;发布提示信息&quot;    //将文件设置为可执行
+</code></pre>
+<p>也可以使用其他命令</p>
+<pre><code>sh deploy.sh &quot;发布提示信息&quot;
+//或者
+bash deploy.sh &quot;发布提示信息&quot;
+</code></pre>
+<p>首次发布成功后，将文件中<code>git push -u origin main</code>修改为<code>git push origin main</code>。以后，每当网页内容更新后，执行以上命令再次发布就可以了。</p>
+<h2 id="gitee">Gitee</h2>
+<h4 id="新建仓库">新建仓库</h4>
+<p>登录 Gitee 后，新建一个仓库，仓库名称和用户名一致，当然也可以用其他的名字，差别在于访问的形式不一样。</p>
+<ul>
+<li>使用用户名作为仓库名，可以用子域名的形式访问： <code>https://&lt;用户名&gt;.gitee.io</code>。</li>
+<li>使用其他名称，则需要用 <code>https://&lt;用户名&gt;.gitee.io/&lt;仓库名&gt;</code> 。</li>
+</ul>
+<p>在创建页面还需要做几个选择。</p>
+<ul>
+<li>是否开源 勾选 私有</li>
+<li>勾选 使用readme文件初始化这个仓库</li>
+</ul>
+<p>点击创建。</p>
+<h4 id="首次上传静态网站文件">首次上传静态网站文件</h4>
+<p>用 Hugo 生成一个静态网站生成器实例,加载网页内容并配置好网站，进入生成器根目录执行以下命令，生成网页并上传到 Gitee 仓库。</p>
+<pre><code>hugo        //生成静态网页
+git init        
+git remote add origin git@gitee:&lt;用户名&gt;/&lt;用户名&gt;.git
+git pull origin master
+git add -A
+git commit -m &quot;提示语&quot;
+git push -u origin master
+</code></pre>
+<h4 id="设置-gitee-pages-并启动服务">设置 Gitee Pages 并启动服务</h4>
+<p>在头部菜单栏，点击服务，选择 Gitee Pages 进行设置。</p>
+<ul>
+<li>部署目录栏输入静态网站文件所在目录名 public</li>
+<li>选择强制使用 HTTPS</li>
+<li>启动</li>
+</ul>
+<p>出现&quot;已开启 Gitee Pages 服务，网站地址： https://&hellip;&ldquo;提示表示启动成功，静态网站部署完成。</p>
+<h4 id="更新网页内容">更新网页内容</h4>
+<p>当网页内容更新后，就需要再次上传，使用的命令略有不同。</p>
+<pre><code>hugo        //生成新的网页
+git add -A
+git commit -m &quot;新的提示语&quot;
+git push origin master
+</code></pre>
+<p>特别提醒：上传之后，会发现网站的内容并没有改变，还是原来的内容。这是需要登录到 Gitee ，找到对应仓库，再次进入 Gitee Pages 服务，点击更新即可。</p>
+<h4 id="总结">总结</h4>
+<p>采用这种方法，可以把生成器以及静态网站同时托管到 Gitee 的一个仓库上，保证了文件的完整性，也便于维护，特别是异地维护，不足之处就是每次都需要到 Gitee 上更新；如果直接托管静态网站不包括生成器，也就是上传 public 目录，那么，上传后会自动更新，但维护不便。总之，各有利弊。</p></div>
+</article>
+
+<div id="meta">
+	
+	<ul class="tags">
+		<i class="ri-bookmark-fill"></i>
+		
+			<li> <a href="https://genway.top/tags/gitee">gitee</a> </li>
+		
+			<li> <a href="https://genway.top/tags/github">github</a> </li>
+		
+			<li> <a href="https://genway.top/tags/git">git</a> </li>
+		
+
+	</ul>
+	
+
+	<div class="prev-next">
+		
+		 	<a class="prev" href="https://genway.top/blog/hugo-theme-make/">上一篇</a>
+		
+		
+	</div>
+
+</div>
+</div>
+   </main>
+   <aside>
+
+<div class="card">
+	<div class="card-title">
+		<h4>相关</h4>
+	</div>
+	
+</div>
+</aside>
+
+         </div>
+         
+         <footer id="footer"><p>© 2021 Genway. All rights reserved.</p>
+</footer>
+      </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<script src="https://genway.top/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      
+<meta charset="utf-8" />
+
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+
+
+<title>安全外壳协议 SSH ｜ 既明勿昧</title>
+
+
+
+<link rel="shortcut icon " type="images/x-icon" href="/images/favicon.ico">
+
+<link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" />
+
+
+
+
+<link rel="stylesheet" type="text/css" media="screen" href="https://genway.top/css/main.css">
+</head>
+   <body>
+      
+      <header id="header"><div id="title">
+   <a id="logo" href="/">既明勿昧</a>
+   <a id="menu-toggle" class="burger">
+      <span></span>
+      <span></span>
+      <span></span>
+   </a>
+</div>
+
+<div id="menu-content">
+   <ul class="menu">
+      
+      
+         
+         
+         
+         
+		<li class="menu-item">
+			<a class="" href="/">首页</a>
+		</li>
+		
+         
+         
+         
+         
+		<li class="menu-item">
+			<a class="active" href="/blog/">博客</a>
+		</li>
+		
+	</ul>
+</div>
+</header>
+      
+      <div id="container">
+         
+         <div id="stage">
+   <main><div id="breadcrumb">
+   <ol>
+     
+      
+         
+      
+         
+      
+      <li>
+         <a href="https://genway.top/">首页</a>
+      </li>
+   
+      
+      <li>
+         <a href="https://genway.top/blog/">博客</a>
+      </li>
+   
+      
+      <li>
+         <a href="https://genway.top/blog/ssh/">安全外壳协议 SSH</a>
+      </li>
+   
+   </ol>
+   
+</div>
+<div class="container"><article id="content">
+	<header class="content-header">
+		<p class="title">安全外壳协议 SSH</p>
+		<p>
+			<span>
+				
+					Homecat
+				
+			</span>
+		</p>
+	</header>
+	<div class="markdown"><p>SSH 为 Secure Shell 的缩写，由 IETF 的网络小组（Network Working Group）所制定；SSH 为建立在应用层基础上的安全协议。</p>
+<h2 id="ssh-命令">SSH 命令</h2>
+<h4 id="生成-ssh-key">生成 SSH Key</h4>
+<pre><code>ls -al ~/.ssh     //检查是否有存在的 SSH Key
+ssh-keygen -t rsa -C &lt;your_email&gt;     //生成 SSH Key
+</code></pre>
+<p>说明：生成过程中，需要回答问题，一般都是”yes“通过；生成的 Key 在 ~/.ssh 目录(/home/用户名/.ssh)，目录中的 <code>id_rsa</code> 是私钥 <code>id_rsa.pub</code> 是公钥。</p>
+<h4 id="把私钥添加到本地高速缓存">把私钥添加到本地高速缓存</h4>
+<pre><code>ssh-add ~/.ssh/id_rsa
+</code></pre>
+<h4 id="把公钥添加到网站">把公钥添加到网站</h4>
+<pre><code>cat ~/.ssh/id_rsa.pub     //打开公钥并复制
+</code></pre>
+<p>以 Github 为例(Gitee基本相同)，在 <a href="https://github.com">github.com</a> 注册用户成功后登录网站，找到用户头像打开菜单，依次点击 <code>Settings</code> &gt; <code>SSH and GPG Keys</code> &gt; <code>New SSH Key</code>；进入新增页面后，在 Title 栏中填入用户选定配对名称，在 Key 栏中粘帖公钥，点击 <code>Add SSH Key</code>，配对完成。</p>
+<h4 id="检验配对">检验配对</h4>
+<pre><code>ssh -T git@github.com
+</code></pre>
+<p>出现 “Hi ×××! You&rsquo;ve successfully authenticated, but GitHub does not provide shell access.” 信息表示配对成功。<br>
+配对成功后，就可以上传和下载代码了。</p></div>
+</article>
+
+<div id="meta">
+	
+	<ul class="tags">
+		<i class="ri-bookmark-fill"></i>
+		
+			<li> <a href="https://genway.top/tags/ssh">SSH</a> </li>
+		
+
+	</ul>
+	
+
+	<div class="prev-next">
+		
+		 	<a class="prev" href="https://genway.top/blog/git-practice/">上一篇</a>
+		
+		
+		 	<a class="next" href="https://genway.top/blog/hugo-theme-make/">下一篇</a>
+		
+	</div>
+
+</div>
+</div>
+   </main>
+   <aside>
+
+<div class="card">
+	<div class="card-title">
+		<h4>相关</h4>
+	</div>
+	
+</div>
+</aside>
+
+         </div>
+         
+         <footer id="footer"><p>© 2021 Genway. All rights reserved.</p>
+</footer>
+      </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<script src="https://genway.top/js/main.js"></script>
+</body>
+</html>

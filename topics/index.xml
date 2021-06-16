@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>主题 on 既明勿昧</title>
+    <link>https://genway.top/topics/</link>
+    <description>Recent content in 主题 on 既明勿昧</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-Hans-CN</language>
+    <copyright>© 2021 Genway. All rights reserved.</copyright>
+    <lastBuildDate>Wed, 16 Jun 2021 09:40:37 +0800</lastBuildDate><atom:link href="https://genway.top/topics/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>静态网站实践</title>
+      <link>https://genway.top/topics/%E9%9D%99%E6%80%81%E7%BD%91%E7%AB%99%E5%AE%9E%E8%B7%B5/</link>
+      <pubDate>Wed, 16 Jun 2021 09:40:37 +0800</pubDate>
+      
+      <guid>https://genway.top/topics/%E9%9D%99%E6%80%81%E7%BD%91%E7%AB%99%E5%AE%9E%E8%B7%B5/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>开源之美</title>
+      <link>https://genway.top/topics/%E5%BC%80%E6%BA%90%E4%B9%8B%E7%BE%8E/</link>
+      <pubDate>Mon, 14 Jun 2021 20:25:41 +0800</pubDate>
+      
+      <guid>https://genway.top/topics/%E5%BC%80%E6%BA%90%E4%B9%8B%E7%BE%8E/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

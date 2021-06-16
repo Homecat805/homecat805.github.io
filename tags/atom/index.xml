@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Atom on 既明勿昧</title>
+    <link>https://genway.top/tags/atom/</link>
+    <description>Recent content in Atom on 既明勿昧</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-Hans-CN</language>
+    <copyright>© 2021 Genway. All rights reserved.</copyright>
+    <lastBuildDate>Mon, 14 Jun 2021 15:38:27 +0800</lastBuildDate><atom:link href="https://genway.top/tags/atom/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Atom 的安装和使用</title>
+      <link>https://genway.top/blog/atom-practice/</link>
+      <pubDate>Mon, 14 Jun 2021 15:38:27 +0800</pubDate>
+      
+      <guid>https://genway.top/blog/atom-practice/</guid>
+      <description>&lt;p&gt;Atom 是 Github 专门为程序员推出的一个跨平台文本编辑器，丰富的插件几乎能够满足所有 web 开发需求。
+。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

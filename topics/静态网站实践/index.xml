@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>静态网站实践 on 既明勿昧</title>
+    <link>https://genway.top/topics/%E9%9D%99%E6%80%81%E7%BD%91%E7%AB%99%E5%AE%9E%E8%B7%B5/</link>
+    <description>Recent content in 静态网站实践 on 既明勿昧</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-Hans-CN</language>
+    <copyright>© 2021 Genway. All rights reserved.</copyright>
+    <lastBuildDate>Wed, 16 Jun 2021 09:40:37 +0800</lastBuildDate><atom:link href="https://genway.top/topics/%E9%9D%99%E6%80%81%E7%BD%91%E7%AB%99%E5%AE%9E%E8%B7%B5/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>静态网站的托管</title>
+      <link>https://genway.top/blog/static-site-deploy/</link>
+      <pubDate>Wed, 16 Jun 2021 09:40:37 +0800</pubDate>
+      
+      <guid>https://genway.top/blog/static-site-deploy/</guid>
+      <description>&lt;p&gt;Github 和 Gitee 都可以托管静态网站，通常有两种方式：项目主页和个人主页，每个账号可以建多个项目主页，但用户个人主页只能拥有一个。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      
+<meta charset="utf-8" />
+
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+
+
+<title>Git 的安装和使用 ｜ 既明勿昧</title>
+
+
+
+<link rel="shortcut icon " type="images/x-icon" href="/images/favicon.ico">
+
+<link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" />
+
+
+
+
+<link rel="stylesheet" type="text/css" media="screen" href="https://genway.top/css/main.css">
+</head>
+   <body>
+      
+      <header id="header"><div id="title">
+   <a id="logo" href="/">既明勿昧</a>
+   <a id="menu-toggle" class="burger">
+      <span></span>
+      <span></span>
+      <span></span>
+   </a>
+</div>
+
+<div id="menu-content">
+   <ul class="menu">
+      
+      
+         
+         
+         
+         
+		<li class="menu-item">
+			<a class="" href="/">首页</a>
+		</li>
+		
+         
+         
+         
+         
+		<li class="menu-item">
+			<a class="active" href="/blog/">博客</a>
+		</li>
+		
+	</ul>
+</div>
+</header>
+      
+      <div id="container">
+         
+         <div id="stage">
+   <main><div id="breadcrumb">
+   <ol>
+     
+      
+         
+      
+         
+      
+      <li>
+         <a href="https://genway.top/">首页</a>
+      </li>
+   
+      
+      <li>
+         <a href="https://genway.top/blog/">博客</a>
+      </li>
+   
+      
+      <li>
+         <a href="https://genway.top/blog/git-practice/">Git 的安装和使用</a>
+      </li>
+   
+   </ol>
+   
+</div>
+<div class="container"><article id="content">
+	<header class="content-header">
+		<p class="title">Git 的安装和使用</p>
+		<p>
+			<span>
+				
+					Homecat
+				
+			</span>
+		</p>
+	</header>
+	<div class="markdown"><p>Git 是一个开源的分布式版本控制系统，也是内容管理系统(CMS)和工作管理系统，适用于各类项目。</p>
+<h2 id="安装-git">安装 Git</h2>
+<p>在 Ubuntu 20.04 LTS 系统上安装 Git 的最新版本</p>
+<pre><code>sudo add-apt-repository ppa:git-core/ppa
+sudo apt update
+sudo apt install git
+</code></pre>
+<h2 id="git-命令">Git 命令</h2>
+<p>Git 的使用方法请访问 <a href="https://git-scm.com">Git官网</a>。</p>
+<h4 id="配置账号">配置账号</h4>
+<pre><code>git config –global user.name &lt;your_name&gt;     //配置用户名
+git config –global user.email &lt;your_email&gt;     //配置电子邮箱
+git config -l     //查看配置信息
+</code></pre>
+<h4 id="新建仓库">新建仓库</h4>
+<pre><code>mkdir orchid
+cd orchid
+git init
+git remote add origin https://gitee.com/homecat805/orchid.git
+git add -A
+git commit -m &quot;#####&quot;
+git push -u origin master
+</code></pre>
+<h4 id="已有仓库">已有仓库</h4>
+<pre><code>git push origin master
+</code></pre></div>
+</article>
+
+<div id="meta">
+	
+	<ul class="tags">
+		<i class="ri-bookmark-fill"></i>
+		
+			<li> <a href="https://genway.top/tags/git">Git</a> </li>
+		
+			<li> <a href="https://genway.top/tags/ubuntu">Ubuntu</a> </li>
+		
+
+	</ul>
+	
+
+	<div class="prev-next">
+		
+		 	<a class="prev" href="https://genway.top/blog/atom-practice/">上一篇</a>
+		
+		
+		 	<a class="next" href="https://genway.top/blog/ssh/">下一篇</a>
+		
+	</div>
+
+</div>
+</div>
+   </main>
+   <aside>
+
+<div class="card">
+	<div class="card-title">
+		<h4>相关</h4>
+	</div>
+	
+	<div class="card-content">
+		
+		<span class="normal">
+			<i class="ri-article-line"></i>
+			<a href="https://genway.top/blog/atom-practice/">Atom 的安装和使用</a>
+		</span>
+		
+		<span class="normal">
+			<i class="ri-article-line"></i>
+			<a href="https://genway.top/blog/ubuntu-practice/">Ubuntu 安装、设置与使用</a>
+		</span>
+		
+	</div>
+	
+</div>
+</aside>
+
+         </div>
+         
+         <footer id="footer"><p>© 2021 Genway. All rights reserved.</p>
+</footer>
+      </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<script src="https://genway.top/js/main.js"></script>
+</body>
+</html>

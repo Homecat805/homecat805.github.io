@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      
+<meta charset="utf-8" />
+
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+
+
+<title>Ubuntu 安装、设置与使用 ｜ 既明勿昧</title>
+
+
+
+<link rel="shortcut icon " type="images/x-icon" href="/images/favicon.ico">
+
+<link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" />
+
+
+
+
+<link rel="stylesheet" type="text/css" media="screen" href="https://genway.top/css/main.css">
+</head>
+   <body>
+      
+      <header id="header"><div id="title">
+   <a id="logo" href="/">既明勿昧</a>
+   <a id="menu-toggle" class="burger">
+      <span></span>
+      <span></span>
+      <span></span>
+   </a>
+</div>
+
+<div id="menu-content">
+   <ul class="menu">
+      
+      
+         
+         
+         
+         
+		<li class="menu-item">
+			<a class="" href="/">首页</a>
+		</li>
+		
+         
+         
+         
+         
+		<li class="menu-item">
+			<a class="active" href="/blog/">博客</a>
+		</li>
+		
+	</ul>
+</div>
+</header>
+      
+      <div id="container">
+         
+         <div id="stage">
+   <main><div id="breadcrumb">
+   <ol>
+     
+      
+         
+      
+         
+      
+      <li>
+         <a href="https://genway.top/">首页</a>
+      </li>
+   
+      
+      <li>
+         <a href="https://genway.top/blog/">博客</a>
+      </li>
+   
+      
+      <li>
+         <a href="https://genway.top/blog/ubuntu-practice/">Ubuntu 安装、设置与使用</a>
+      </li>
+   
+   </ol>
+   
+</div>
+<div class="container"><article id="content">
+	<header class="content-header">
+		<p class="title">Ubuntu 安装、设置与使用</p>
+		<p>
+			<span>
+				
+					Homecat
+				
+			</span>
+		</p>
+	</header>
+	<div class="markdown"><p>Ubuntu 是一个以桌面应用为主的 Linux 操作系统，因其开源软件之属性而获得广泛应用。</p>
+<h2 id="ubuntu-2004-lts-的安装">Ubuntu 20.04 LTS 的安装</h2>
+<h4 id="下载安装文件">下载安装文件</h4>
+<p>在 Ubuntu 官网 <a href="https://ubuntu.com">ubuntu.com</a>，可以下载到 Ubuntu 20.04 LTS 的安装文件。安装文件有多种版本，也可以采用不同的安装方式。客户端可以使用的最新的长期支持的稳定版本为：<code>ubuntu-20.04.2.0-desktop-amd64.iso</code>。
+如果主站的下载速度比较慢，可以在<a href="https://launchpad.net/ubuntu/+cdmirrors">镜像网站</a>选择速度快的。</p>
+<h4 id="制作安装盘">制作安装盘</h4>
+<p>使用 Rufus 制作 Ubuntu 系统的安装盘。由于 Rufus 只能在 Windows 上运行，并且要求 Win7 及后续版本(32或64位均可)，因此制作过程要在 Windows 环境中进行。</p>
+<ul>
+<li>从 Rufus 官网 <a href="http://rufus.ie">rufus.ie</a>下载 <code>rufus.exe</code> 文件。</li>
+<li>制作过程简单，在程序界面上依次选择下载的 ISO 文件、启动模式等参数后，按开始即可。（特别说明：启动模式的选择很重要，和要安装电脑的启动模式有关系，BIOS 或者 UEFI，必须正确选择。）</li>
+</ul>
+<h4 id="单系统安装步骤">单系统安装步骤</h4>
+<ul>
+<li>将USB安装盘插入待安装的电脑。</li>
+<li>打开电脑，进入 setup，选择从 USB 启动，进入 Ubuntu 安装程序，按部就班就可以了。</li>
+</ul>
+<h2 id="uget-的安装和设置">Uget 的安装和设置</h2>
+<p>Uget 是一款优秀的下载管理工具，可以提高下载速度。Uget 可以作为独立的应用安装，也可以作为扩展安装到浏览器上，本例是以 Firefox for Ubuntu 为对象，安装 Uget 扩展。</p>
+<h4 id="安装-uget-和-aria2">安装 uget 和 aria2</h4>
+<pre><code>sudo apt install uget
+sudo apt install aria2
+</code></pre>
+<h4 id="配置-uget">配置 Uget</h4>
+<p>打开安装好的 Gget，在菜单上依次选择 <code>Edit</code> &gt; <code>Settings</code> &gt; <code>Plug-in</code> &gt; <code>Plug-in matching order</code> &gt; <code>aria2</code>，将 aria2 配置为优先。</p>
+<p>至此，Uget 已经可以独立使用了，为了在浏览器上也可以使用，需要将 Uget 安装为扩展。</p>
+<h4 id="安装-uget-integrator">安装 uget-integrator</h4>
+<pre><code>sudo add-apt-repository ppa:uget-team/ppa
+sudo apt update
+sudo apt install uget-integrator
+</code></pre>
+<h4 id="安装扩展">安装扩展</h4>
+<p>打开 Firefox 浏览器，找到并点击右上角 Menu，选择 Add-ons；在 Add-ons 的界面的 Find more add-ons 中搜索 uget；在结果列表中选择 uGet Integration；点击 Add to Firefox 按钮即可。</p>
+<h2 id="常用命令">常用命令</h2>
+<h4 id="安装和删除程序">安装和删除程序</h4>
+<pre><code>sudo apt install &lt;程序名&gt;
+sudo apt remove &lt;程序名&gt; //删除应用（保留配置文件）
+sudo apt --purge remove &lt;程序名&gt; //删除应用(不保留配置文件)
+</code></pre>
+<h4 id="加载和卸载软件包">加载和卸载软件包</h4>
+<pre><code>sudo add-apt-repository ppa:&lt;软件包名&gt; //家在软件包
+sudo add-apt-repository --remove ppa:&lt;软件包名&gt; //卸载附加软件包
+sudo apt update //更新软件包
+sudo apt autoremove //卸载多余的软件包
+</code></pre></div>
+</article>
+
+<div id="meta">
+	
+	<ul class="tags">
+		<i class="ri-bookmark-fill"></i>
+		
+			<li> <a href="https://genway.top/tags/ubuntu">Ubuntu</a> </li>
+		
+			<li> <a href="https://genway.top/tags/uget">Uget</a> </li>
+		
+
+	</ul>
+	
+
+	<div class="prev-next">
+		
+		 	<a class="prev" href="https://genway.top/blog/markdown-%E8%AF%AD%E6%B3%95%E7%A4%BA%E4%BE%8B/">上一篇</a>
+		
+		
+		 	<a class="next" href="https://genway.top/blog/atom-practice/">下一篇</a>
+		
+	</div>
+
+</div>
+</div>
+   </main>
+   <aside>
+
+<div class="card">
+	<div class="card-title">
+		<h4>相关</h4>
+	</div>
+	
+</div>
+</aside>
+
+         </div>
+         
+         <footer id="footer"><p>© 2021 Genway. All rights reserved.</p>
+</footer>
+      </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<script src="https://genway.top/js/main.js"></script>
+</body>
+</html>

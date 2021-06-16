@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>分类 on 既明勿昧</title>
+    <link>https://genway.top/categories/</link>
+    <description>Recent content in 分类 on 既明勿昧</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-Hans-CN</language>
+    <copyright>© 2021 Genway. All rights reserved.</copyright>
+    <lastBuildDate>Wed, 16 Jun 2021 09:40:37 +0800</lastBuildDate><atom:link href="https://genway.top/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>笔记</title>
+      <link>https://genway.top/categories/%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Wed, 16 Jun 2021 09:40:37 +0800</pubDate>
+      
+      <guid>https://genway.top/categories/%E7%AC%94%E8%AE%B0/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>校园</title>
+      <link>https://genway.top/categories/%E6%A0%A1%E5%9B%AD/</link>
+      <pubDate>Wed, 10 Mar 2021 14:17:52 +0800</pubDate>
+      
+      <guid>https://genway.top/categories/%E6%A0%A1%E5%9B%AD/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

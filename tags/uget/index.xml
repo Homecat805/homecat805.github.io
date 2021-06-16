@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Uget on 既明勿昧</title>
+    <link>https://genway.top/tags/uget/</link>
+    <description>Recent content in Uget on 既明勿昧</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-Hans-CN</language>
+    <copyright>© 2021 Genway. All rights reserved.</copyright>
+    <lastBuildDate>Mon, 14 Jun 2021 10:36:43 +0800</lastBuildDate><atom:link href="https://genway.top/tags/uget/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Ubuntu 安装、设置与使用</title>
+      <link>https://genway.top/blog/ubuntu-practice/</link>
+      <pubDate>Mon, 14 Jun 2021 10:36:43 +0800</pubDate>
+      
+      <guid>https://genway.top/blog/ubuntu-practice/</guid>
+      <description>&lt;p&gt;Ubuntu 是一个以桌面应用为主的 Linux 操作系统，因其开源软件之属性而获得广泛应用。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

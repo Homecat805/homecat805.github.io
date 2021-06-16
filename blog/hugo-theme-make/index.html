@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      
+<meta charset="utf-8" />
+
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+
+
+<title>Hugo 主题制作笔记 ｜ 既明勿昧</title>
+
+
+
+<link rel="shortcut icon " type="images/x-icon" href="/images/favicon.ico">
+
+<link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" />
+
+
+
+
+<link rel="stylesheet" type="text/css" media="screen" href="https://genway.top/css/main.css">
+</head>
+   <body>
+      
+      <header id="header"><div id="title">
+   <a id="logo" href="/">既明勿昧</a>
+   <a id="menu-toggle" class="burger">
+      <span></span>
+      <span></span>
+      <span></span>
+   </a>
+</div>
+
+<div id="menu-content">
+   <ul class="menu">
+      
+      
+         
+         
+         
+         
+		<li class="menu-item">
+			<a class="" href="/">首页</a>
+		</li>
+		
+         
+         
+         
+         
+		<li class="menu-item">
+			<a class="active" href="/blog/">博客</a>
+		</li>
+		
+	</ul>
+</div>
+</header>
+      
+      <div id="container">
+         
+         <div id="stage">
+   <main><div id="breadcrumb">
+   <ol>
+     
+      
+         
+      
+         
+      
+      <li>
+         <a href="https://genway.top/">首页</a>
+      </li>
+   
+      
+      <li>
+         <a href="https://genway.top/blog/">博客</a>
+      </li>
+   
+      
+      <li>
+         <a href="https://genway.top/blog/hugo-theme-make/">Hugo 主题制作笔记</a>
+      </li>
+   
+   </ol>
+   
+</div>
+<div class="container"><article id="content">
+	<header class="content-header">
+		<p class="title">Hugo 主题制作笔记</p>
+		<p>
+			<span>
+				
+					Homecat
+				
+			</span>
+		</p>
+	</header>
+	<div class="markdown"><p>Hugo 主题制作有不少特点，特别是强大的内置程序，只需要很少的代码，就能实现强大的功能。</p>
+<h2 id="使用-sass-预处理程序">使用 SASS 预处理程序</h2>
+<p>Hugo 内置了 CSS 的预处理程序，任何 SASS 或者 SCSS 文件都可以通过使用 Hugo Pipes 被转换成 CSS 文件，还有指定文件位置、文件压缩等辅助功能，使用简单、方便，很大程度地提高了制作效率。需要特别注意的是：安装 Hugo 系统文件时，要下载扩展版本，即带有 extended 字样的安装文件。</p>
+<h4 id="assets-文件夹">assets 文件夹</h4>
+<p>根据 Hugo 文档，SASS 文件转换成 CSS 文件，需要使用 Hugo Pipes 功能，而 Hugo Pipes 要求将被转换的文件放到指定的文件夹 assets 中。<br>
+assets 文件夹不是默认生成的，因此要手动添加。添加的位置有两个：根目录下<code>/assets</code>，或者在制作的主题目录下<code>/themes/&lt;主题名称&gt;/assets</code>。一般情况下，如果是专门制作主题，那么放在主题目录下，使主题文件相对集中，感觉比较顺理成章。<br>
+在 assets 文件夹下，再新建 sass 文件夹，并将后缀名为 scss 的 SASS 文件保存到 sass 文件夹内。SASS 有符合自身特点的文件组织方式，本文不展开；只把最后生成的 scss 文件作为目标源文件，如：main.scss 。</p>
+<h4 id="文件引用">文件引用</h4>
+<p>Hugo 文档中给出了引用方式，分两步：</p>
+<ul>
+<li>使用 <code>resources.Get</code> 获取源文件</li>
+</ul>
+<pre><code>{{ $sass := resources.Get &quot;&lt;路径&gt;/&lt;文件名&gt;.scss&quot; }}
+</code></pre>
+<p>实际使用时可以自定义，例如：<code>path=&quot;sass&quot;</code>、<code>filename=&quot;main&quot;</code>。</p>
+<pre><code>{{ $sass := resources.Get &quot;sass/main.scss&quot; }}
+</code></pre>
+<ul>
+<li>使用 <code>resources.ToCSS</code> 转换成 CSS 文件</li>
+</ul>
+<pre><code>{{ $style := $sass | resources.ToCSS }}
+</code></pre>
+<p>事实上完成以上两步，仅仅是完成了文件转换。在 html 文件的<head>中完整地引用 CSS 文件应当包含第三步：</p>
+<pre><code>{{ $sass := resources.Get &quot;sass/main.scss&quot; }}
+{{ $style := $sass | resources.ToCSS }}
+&lt;link rel=&quot;stylesheet&quot; href=&quot;{{ $style.Permalink }}&quot;&gt;
+
+</code></pre>
+<h4 id="转换">转换</h4>
+<p>在执行 <code>hugo</code> 和 <code>hugo server</code> 命令时，文件就进行转换。<br>
+执行完 <code>hugo</code> 后，生成的文件在 <code>/public</code> 目录下。<br>
+执行完 <code>hugo server</code> 后，生成的文件暂存在缓存里，服务退出后也就消失了。</p>
+<h4 id="辅助功能">辅助功能</h4>
+<p>通过以上的方法，生成的 CSS 文件和所在的文件夹为：sass/main.css 。如果需要改变存放的位置和文件名，就需要用到辅助功能，介绍几个常用的功能。</p>
+<ul>
+<li>targetPath [string] (目标路径): &lt;路径&gt;/&lt;文件名&gt;.css</li>
+<li>outputStyle [string] (输出方式): 默认 <code>nested</code> ，可选 <code>compact</code>、<code>expanded</code>、<code>compressed</code> ；其中：<code>nested</code> 为嵌套形式，<code>compressed</code> 为压缩形式。</li>
+<li>其它功能参见<a href="https://gohugo.io/hugo-pipes/scss-sass/">文档</a></li>
+</ul>
+<p>实例：指定输出文件到 /css/style.css，并且压缩文件。</p>
+<pre><code>{{ $options := (dict &quot;targetPath&quot; &quot;css/style.css&quot; &quot;outputStyle&quot; &quot;compressed&quot; ) }}
+{{ $sass := resources.Get &quot;sass/style.scss&quot; }}
+{{ $style := $sass | resources.ToCSS $options }}
+&lt;link rel=&quot;stylesheet&quot; media=&quot;screen&quot; href=&quot;{{ $style.Permalink }}&quot;&gt;
+</code></pre>
+<h2 id="goldmark-配置">Goldmark 配置</h2>
+<p>Hugo 内容页的格式支持 Markdown 和 HTML 两种格式，也就是说可以用 Markdown 或 HTML 来编写内容页。Markdown 是 HTML 另外一种表达方式，或者说是建立在 HTML 基础上的表达方式，使用特定符号替代 HTML 标签。在编写文件时使用特定符号，不在 Markdown 涵盖范围之内的标签，可以直接在文档里面用 HTML 撰写。目前支持的 HTML 元素有：kbd、b、i、em、sup、sub、br 等。</p>
+<p>在 Hugo 系统里，内置了 Markdown 的编译器。早期默认的是 Blackfriday，版本[V0.60]后的系统默认的是 Goldmark。 Blackfriday 是默认设置 Markdown 自动渲染 HTML，而 Goldmark 不是默认设置，要进行人工配置。</p>
+<h4 id="配置">配置</h4>
+<p>打开配置文件 <mark>config.toml</mark>，加入以下参数以改变 Goldmark 的默认状态。</p>
+<pre><code>[markup]
+  defaultMarkdownHandler = &quot;goldmark&quot;
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+</code></pre>
+<p>若使用目录文件配置，则在 <mark>config/_default</mark> 下，添加 <mark>markup.toml</mark> 文件。</p>
+<pre><code>defaultMarkdownHandler = &quot;goldmark&quot;
+[goldmark]
+  [goldmark.renderer]
+    unsafe = true
+</code></pre></div>
+</article>
+
+<div id="meta">
+	
+	<ul class="tags">
+		<i class="ri-bookmark-fill"></i>
+		
+			<li> <a href="https://genway.top/tags/hugo">Hugo</a> </li>
+		
+			<li> <a href="https://genway.top/tags/sass">SASS</a> </li>
+		
+
+	</ul>
+	
+
+	<div class="prev-next">
+		
+		 	<a class="prev" href="https://genway.top/blog/ssh/">上一篇</a>
+		
+		
+		 	<a class="next" href="https://genway.top/blog/static-site-deploy/">下一篇</a>
+		
+	</div>
+
+</div>
+</div>
+   </main>
+   <aside>
+
+<div class="card">
+	<div class="card-title">
+		<h4>相关</h4>
+	</div>
+	
+	<div class="card-content">
+		
+		<span class="normal">
+			<i class="ri-article-line"></i>
+			<a href="https://genway.top/blog/static-site-generator/">Hugo-静态网站生成器</a>
+		</span>
+		
+	</div>
+	
+</div>
+</aside>
+
+         </div>
+         
+         <footer id="footer"><p>© 2021 Genway. All rights reserved.</p>
+</footer>
+      </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<script src="https://genway.top/js/main.js"></script>
+</body>
+</html>
