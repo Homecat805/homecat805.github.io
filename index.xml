@@ -64,15 +64,6 @@
     </item>
     
     <item>
-      <title>Markdown 语法示例</title>
-      <link>https://genway.top/blog/markdown-%E8%AF%AD%E6%B3%95%E7%A4%BA%E4%BE%8B/</link>
-      <pubDate>Sat, 12 Jun 2021 19:20:00 +0800</pubDate>
-      
-      <guid>https://genway.top/blog/markdown-%E8%AF%AD%E6%B3%95%E7%A4%BA%E4%BE%8B/</guid>
-      <description>&lt;p&gt;This article offers a sample of basic Markdown syntax that can be used in Hugo content files, also it shows whether basic HTML elements are decorated with CSS in a Hugo theme.&lt;/p&gt;</description>
-    </item>
-    
-    <item>
       <title>初中毕业照</title>
       <link>https://genway.top/blog/middle-school-graduate/</link>
       <pubDate>Wed, 10 Mar 2021 14:17:52 +0800</pubDate>
