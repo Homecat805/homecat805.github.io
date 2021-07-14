@@ -3,6 +3,7 @@ $(document).ready(function(){
 	// Navigation - Main
 	$("#menu-toggle").click(function () {
 		$("#menu-content").slideToggle(250);
+		$("#langswitch").slideToggle(250);
 	});
 	// Navigation - Main End
 
