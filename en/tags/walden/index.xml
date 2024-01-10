@@ -20,7 +20,7 @@
     </item>
     
     <item>
-      <title>Markdown Syntax - Table, Footnotes, Links and lists</title>
+      <title>Markdown Syntax - Table, Footnotes, Links and Lists</title>
       <link>https://genway.com.cn/en/blog/markdown-syntax-2/</link>
       <pubDate>Thu, 20 Jul 2023 05:16:53 +0000</pubDate>
       <author>13050082@qq.com (Homecat)</author>
@@ -35,6 +35,15 @@
       <author>13050082@qq.com (Homecat)</author>
       <guid>https://genway.com.cn/en/blog/markdown-syntax-1/</guid>
       <description>&lt;p&gt;Markdown is a lightweight markup language used to add formatting elements to plain text documents. This post showcases the manifestations of the markdown grammar related to text in this hugo theme.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Shortcode Syntax - Figure</title>
+      <link>https://genway.com.cn/en/blog/shortcode-syntax/</link>
+      <pubDate>Tue, 10 Jan 2023 18:54:33 +0800</pubDate>
+      <author>13050082@qq.com (Homecat)</author>
+      <guid>https://genway.com.cn/en/blog/shortcode-syntax/</guid>
+      <description>&lt;p&gt;In hugo theme Walden, the application of shortcodes enrich the presentation of content and is constantly maintained and updated.&lt;/p&gt;</description>
     </item>
     
   </channel>
