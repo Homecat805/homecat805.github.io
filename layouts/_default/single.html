@@ -1,0 +1,18 @@
+{{ define "necker" }}
+<div id="breadcrumb">
+    {{ partial "breadcrumb.html" . }}
+</div>
+{{ end }}
+
+{{ define "stager" }}
+<main>
+    <div id="content">
+        {{ partial "content.html" . }}
+    </div>
+</main>
+<aside>
+    <div id="cards">
+        {{ partial "related.html" . }}
+    </div>
+</aside>
+{{ end }}

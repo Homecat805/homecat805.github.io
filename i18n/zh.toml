@@ -1,0 +1,23 @@
+[categories]
+other = "分类"
+
+[tags]
+other = "标签"
+
+[series]
+other = "专题"
+
+[toc]
+other = "目录检索"
+
+[related]
+other = "更多阅读"
+
+[prev]
+other = "上一页"
+
+[next]
+other = "下一页"
+
+[read]
+other = "阅读文章"

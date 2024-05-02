@@ -1,0 +1,49 @@
+<div class="card-container">
+    <div class="card">
+        <div class="card-title">{{i18n "categories"}}</div>
+        <div class="card-content">
+        {{ with .Site.Taxonomies.categories }}
+            {{ range . }}
+            <a class="nowraped" href="{{.Page.Permalink}}">
+                <span>{{.Page.Title}}</span>
+                <span class="dashed-line"></span>
+                <span>{{.Count}}</span>
+            </a>
+            {{ end }}
+        {{ end }}
+        </div>
+    </div>
+</div>
+
+<div class="card-container">
+    <div class="card">
+        <div class="card-title">{{i18n "series"}}</div>
+        <div class="card-content">
+        {{ with .Site.Taxonomies.series }}
+            {{ range . }}
+            <a class="nowraped" href="{{.Page.Permalink}}">
+                <span>{{.Page.Title}}</span>
+                <span class="dashed-line"></span>
+                <span>{{.Count}}</span>
+            </a>
+            {{ end }}
+        {{ end }}
+        </div>
+    </div>
+</div>
+
+<div class="card-container-tag">
+    <div class="card">
+        <div class="card-title">{{i18n "tags"}}</div>
+        <div class="card-content">
+        {{ with .Site.Taxonomies.tags }}
+            {{ range . }}
+            <a class="wraped" href="{{.Page.Permalink}}">
+                <span>{{.Page.Title}}</span>
+                <span class="count">{{.Count}}</span>
+            </a>
+            {{ end }}
+        {{ end }}
+        </div>
+    </div>
+</div>

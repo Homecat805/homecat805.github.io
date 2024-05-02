@@ -1,0 +1,17 @@
+name = 'Original'
+license = 'MIT'
+licenselink = 'https://github.com/owner/repo/LICENSE'
+description = 'Theme description'
+
+
+homepage = 'https://github.com/owner/repo'
+demosite = 'https://owner.github.io/repo'
+
+tags = ['blog', 'company']
+features = ['some', 'awesome', 'features']
+
+[author]
+    name = 'Your name'
+    homepage = 'Your website'
+
+

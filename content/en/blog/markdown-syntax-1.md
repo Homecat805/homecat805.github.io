@@ -1,13 +1,12 @@
----
-title: "Markdown Syntax - Text"
-date: 2023-07-19T08:36:33Z
-draft: false
-author: "Homecat"
-categories: "Hugo Theme"
-tags: ["Hugo","Walden"]
-thumbnail: "https://pic.imgdb.cn/item/658501efc458853aef8aec71.jpg"
-headline: true
----
++++
+title = "Markdown Syntax - Text"
+date = 2023-07-19T08:36:33Z
+draft = false
+author = 'Homecat'
+categories = 'Frontend'
+tags = ["Hugo","Walden"]
+series = ''
++++
 
 Markdown is a lightweight markup language used to add formatting elements to plain text documents. This post showcases the manifestations of the markdown grammar related to text in this hugo theme.
 

@@ -1,0 +1,130 @@
+#stager {
+    main {
+    }
+    aside {
+    }
+}
+
+#itemlist {
+    background-color: var(--white);
+    padding: .5rem;
+    .item-container {
+        padding: .5rem;
+    }
+}
+
+#cards {
+    position: sticky;
+    top: 0;
+    
+    display: flex;
+    flex-flow: wrap;
+    padding: 1rem;
+
+    .card-container {
+        width: 100%;
+        padding: 1rem;
+    }
+    .card-container-tag {
+        width: 100%;
+        padding: 1rem;
+    }
+}
+
+#content {
+    background-color: var(--white);
+    padding: 1rem;
+}
+
+@media (min-width: $sm) {
+    #itemlist {
+        margin: 1rem;
+    }
+
+    #cards {
+        .card-container {
+            width: 50%;
+        }
+        .card-container-tag {
+            width: 100%;
+        }
+    }
+    #content {
+        margin: 1rem;
+    }
+}
+
+@media (min-width: $md) {
+    #cards {
+        .card-container {
+            width: 100%;
+        }
+        .card-container-tag {
+            width: 100%;
+        }
+    }
+
+}
+
+@media (min-width: $lg) {
+    #stager {
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        justify-content: flex-start;
+        main {
+            flex: 1;
+            overflow: auto;
+        }
+        aside {
+            width: 250px;
+        }
+    }
+
+    #cards {
+        padding: .5rem;
+        margin-right: 1rem;
+        .card-container {
+            padding: .5rem;
+        }
+        .card-container-tag {
+            padding: .5rem;
+        }
+    }
+}
+
+@media (min-width: $xl) {
+    #stager {
+        aside {
+            width: 300px;
+        }
+    }
+}
+
+@media (min-width: $xxl) {
+    #stager {
+        aside {
+            width: 350px;
+        }
+    }
+
+    #itemlist {
+        display: flex;
+        flex-flow: wrap;
+        .item-container {
+            width: 50%;
+        }
+    }
+    #cards {
+        padding: .75rem;
+        margin-right: 1.5rem;
+        .card-container {
+            padding: .75rem;
+        }
+        .card-container-tag {
+            padding: .75rem;
+        }
+    }
+}
+
+

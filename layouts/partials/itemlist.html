@@ -1,0 +1,33 @@
+{{ range .Paginator.Pages }}
+<div class="item-container">
+    <section class="item">
+        <div class="item-thumbnail">
+        {{ with .Resources.Get "thumbnail.jpg" }}
+            <img src="{{ .RelPermalink }}" alt="Thumbnail">
+        {{ else }}
+            <img src="{{ "images/thumbnail.jpg" | relURL }}" alt="Thumbnail">
+        {{ end }}
+        </div>
+        <div class="item-text">
+            <div class="item-text-title">
+                <a href="{{.Permalink}}"><b>{{ .Title }}</b></a>
+            </div>
+            {{ .Summary }}
+            <div class="item-text-meta">
+                <span>
+                    <i class="bi bi-calendar3"></i>
+                    {{.Date.Format "Jan 2, 2006"}}
+                </span>
+                <span>
+                    <i class="bi bi-person-circle"></i>
+                    {{ if ne .Params.author "" }}
+                    {{ .Params.author }}
+                    {{ else }}
+                    {{ .Site.Params.author }}
+                    {{ end }}
+                </span>
+            </div>
+        </div>
+    </section>
+</div>
+{{ end }}

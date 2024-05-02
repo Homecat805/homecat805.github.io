@@ -1,0 +1,16 @@
+<article class="content">
+    <header class="content-header">
+        <h1 class="title">{{ .Title }}</h1>
+        <p class="meta">
+            <span>{{ .Date.Format "Jan 2, 2006" }}</span>
+            <span>
+                {{ if ne .Params.author "" }}
+                    {{ .Params.author }}
+                {{ else }}
+                    {{ .Site.Params.author }}
+                {{ end }}
+            </span>
+        </p>
+    </header>
+    <div class="content-inner markdown">{{.Content}}</div>
+</article>

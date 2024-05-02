@@ -1,0 +1,27 @@
+<div class="card-container">
+    {{ with .TableOfContents }}
+    <section class="card">
+        <div class="card-title">{{i18n "toc"}}</div>
+        <div class="card-content">
+            {{ . }}
+        </div>
+    </section>
+    {{ end }}
+</div>
+
+<div class="card-container">
+    {{ $related := .Site.RegularPages.RelatedIndices . "tags" | first 15 }}
+    {{ with $related }}
+    <section class="card">
+        <div class="card-title">{{ i18n "related"}}</div>
+        <div class="card-content">
+        {{ range . }}
+            <a class="related" href="{{.Permalink}}"><i class="bi bi-link-45deg"></i><span>{{.Title}}</span></a>
+        {{ end }}
+        </div>
+    </section>
+    {{ end }}
+</div>
+
+
+

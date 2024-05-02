@@ -1,13 +1,12 @@
----
-title: "网页明暗模式切换的原生代码"
-date: 2022-08-31T09:15:36+08:00
-draft: false
-author: "Homecat"
-categories: "数字笔记"
-tags: ["html","css","Javascript","前端"]
-thumbnail: ""
-headline: true
----
++++
+title = "网页明暗模式切换的原生代码"
+date = 2022-08-31T09:15:36+08:00
+draft = false
+author = 'Homecat'
+categories = '数字笔记'
+tags = ["html","css","Javascript","前端"]
+series = ''
++++
 
 实现网页明暗模式的切换有多种方式，各有优缺点，可有个人喜好选择使用。本文记录通过 html、css 和 javascript 三种语言实现切换功能的基本思路和代码。
 

@@ -1,13 +1,13 @@
----
-title: "Shortcode Syntax - Figure"
-date: 2023-01-10T18:54:33+08:00
-draft: false
-author: "Homecat"
-categories: "Hugo Theme"
-tags: ["Hugo","Walden"]
-thumbnail: "https://pic.imgdb.cn/item/658501efc458853aef8aec71.jpg"
-headline: true
----
++++
+title = "Shortcode Syntax - Figure"
+date = 2023-01-10T18:54:33+08:00
+draft = false
+author = 'Homecat'
+categories = 'Frontend'
+tags = ["Hugo","Walden"]
+series = ''
++++
+
 In hugo theme Walden, the application of shortcodes enrich the presentation of content and is constantly maintained and updated.
 <!--more-->
 

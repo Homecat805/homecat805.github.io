@@ -1,0 +1,19 @@
+{{ define "necker" }}
+<div id="breadcrumb">
+    {{ partial "breadcrumb.html" . }}
+</div>
+{{ end }}
+
+{{ define "stager" }}
+<main>
+    <div id="itemlist">
+        {{ partial "itemlist.html" . }}
+        {{ partial "pagination.html" . }}
+    </div>
+</main>
+<aside>
+    <div id="cards">
+        {{ partial "taxonomy.html" . }}
+    </div>
+</aside>
+{{ end }}

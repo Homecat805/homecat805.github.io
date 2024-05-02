@@ -1,0 +1,103 @@
+.card {
+    color: var(--slate-600);
+    .card-title {
+        border-bottom: 1px solid var(--slate-300);
+        padding: .5rem;
+        font-size: 1rem;
+        font-weight: bold;    
+    }
+
+    .card-content {
+        padding: 1rem .5rem;  
+        display: flex;
+        flex-flow: wrap;
+
+        font-size: .875rem;
+
+        .nowraped {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+
+            width: 100%;
+            margin-bottom: .5rem;
+
+            color: var(--slate-500);
+
+            .dashed-line {
+                border-top: 1px dashed var(--slate-500);
+                margin: 0 1rem;
+                flex: 1;
+            }
+
+            &:hover {
+                color: var(--primary-800);
+                text-decoration: underline;
+                .dashed-line {
+                    border-top: 1px dashed var(--primary-800);
+                }
+            }
+
+
+        }
+
+        .wraped {
+            display: inline-block;
+            margin-right: 1rem;
+
+            color: var(--slate-500);
+            &:hover {
+                color: var(--primary-800);
+                text-decoration: underline;
+            }
+
+            .count {
+                display: inline-block;
+                font-size: .75rem;
+                line-height: .75rem;
+                padding: .125rem .25rem;
+                background-color: var(--primary-700);
+                color: var(--white);
+                border-radius: .5rem;
+
+            }
+
+        }
+
+        .related {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: flex-start;
+
+            color: var(--slate-500);
+            &:hover {
+                color: var(--primary-800);
+                text-decoration: underline;
+            }
+
+            i {
+                margin-right: .5rem;
+            }
+        }
+    }
+}
+
+#TableOfContents {
+    ul {
+        list-style: disc;
+        margin-left: 1rem;
+
+        li {
+            a {
+                color: var(--slate-500);
+
+                &:hover {
+                    color: var(--primary-800);
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+}

@@ -1,13 +1,12 @@
----
-title: "Hugo Theme Walden"
-date: 2023-08-25T09:03:08+08:00
-draft: false
-author: "Homecat"
-categories: "Hugo Theme"
-tags: ["Hugo"]
-thumbnail: "https://pic.imgdb.cn/item/658501efc458853aef8aec71.jpg"
-headline: true
----
++++
+title = "Hugo Theme Walden"
+date = 2023-08-25T09:03:08+08:00
+draft = false
+author = 'Homecat'
+categories = 'Frontend'
+tags = ["Hugo","Walden"]
+series = 'Hugo Theme Walden'
++++
 
 After reading <i><b>Walden</b></i>, a collection of essays by American writer Henry David Thoreau, I was deeply influenced by his love of nature and simple living. So, I wrote this concise and clear theme for my personal website and named it Walden.
 

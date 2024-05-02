@@ -1,0 +1,23 @@
+[categories]
+other = "CATEGORY"
+
+[tags]
+other = "TAG"
+
+[series]
+other = "SERIES"
+
+[toc]
+other = "TABLE OF CONTENT"
+
+[related]
+other = "Read More"
+
+[prev]
+other = "PREV"
+
+[next]
+other = "NEXT"
+
+[read]
+other = "Reading"
