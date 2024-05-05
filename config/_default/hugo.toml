@@ -1,0 +1,29 @@
+baseURL = 'https://genway.com.cn/'
+
+theme = 'hugo-theme-jasmine'
+
+defaultContentLanguage = 'en'
+defaultContentLanguageInSubdir = false
+
+paginate = 12
+
+[taxonomies]
+  category = 'categories'
+  series = 'series'
+  tag = 'tags'
+
+[markup]
+    defaultMarkdownHandler = 'goldmark'
+    [markup.goldmark.renderer]
+        unsafe = true
+    [markup.highlight]
+        codeFences = true
+        guessSyntax = true
+        lineNos = true
+        lineNumbersInTable = false
+        noClasses=false
+
+[module]
+    [module.hugoVersion]
+        extended = true
+        min = "0.123.3"
