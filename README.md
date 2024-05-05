@@ -1,1 +1,0 @@
-# A Basic Structure for Muiltlingaul Hugo Theme
