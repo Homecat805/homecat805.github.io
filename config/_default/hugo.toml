@@ -2,7 +2,7 @@ baseURL = 'https://genway.com.cn/'
 
 theme = 'hugo-theme-jasmine'
 
-defaultContentLanguage = 'en'
+defaultContentLanguage = 'zh'
 defaultContentLanguageInSubdir = false
 
 paginate = 12
