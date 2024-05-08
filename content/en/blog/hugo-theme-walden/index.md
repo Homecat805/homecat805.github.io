@@ -5,7 +5,7 @@ draft = false
 author = "Homecat"
 categories = "Hugo Theme"
 tags = ["Hugo"]
-series = ""
+series = "headline"
 +++
 
 After reading <i><b>Walden</b></i>, a collection of essays by American writer Henry David Thoreau, I was deeply influenced by his love of nature and simple living. So, I wrote this concise and clear theme for my personal website and named it Walden.
