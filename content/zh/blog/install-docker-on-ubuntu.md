@@ -173,8 +173,9 @@ sudo usermod -aG docker $USER
 ```
 {
   "registry-mirrors": [
-    "https://hub-mirror.c.163.com",
-    "https://mirror.baidubce.com"
+        "https://docker.m.daocloud.io",
+        "https://docker.nju.edu.cn",
+        "https://dockerproxy.com"
   ]
 }
 ```
