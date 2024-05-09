@@ -160,7 +160,7 @@ sudo systemctl enable docker
 sudo systemctl start docker
 ```
 
-## 将用户加入 Docker 组
+## 授予非 root 用户特权
 
 ```
 sudo groupadd docker
