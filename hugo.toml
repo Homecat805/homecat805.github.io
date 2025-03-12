@@ -1,0 +1,37 @@
+baseURL = 'https://2025.genway.com.cn/'
+languageCode = 'en-US'
+
+title = 'Genway'
+theme = 'hugo-theme-2025'
+
+copyright = 'All rights reserved.'
+
+
+[params]
+  themestyle = 'red'
+  author = 'Homecat'
+
+[taxonomies]
+  category = 'categories'
+  tag = 'tags'
+  series = 'series'
+
+
+
+[menus]
+  [[menus.main]]
+    identifier = 'home'
+    name = 'Home'
+    pageRef = '/'
+    weight = 10
+
+  [[menus.main]]
+    identifier = 'blog'
+    name = 'Blog'
+    pageRef = '/blog'
+    weight = 20
+
+[module]
+  [module.hugoVersion]
+    extended = true
+    min = "0.144.1"
