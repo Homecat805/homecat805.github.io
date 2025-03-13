@@ -6,7 +6,6 @@ theme = 'hugo-theme-2025'
 
 copyright = 'All rights reserved.'
 
-
 [params]
   themestyle = 'red'
   author = 'Homecat'
@@ -15,8 +14,6 @@ copyright = 'All rights reserved.'
   category = 'categories'
   tag = 'tags'
   series = 'series'
-
-
 
 [menus]
   [[menus.main]]
