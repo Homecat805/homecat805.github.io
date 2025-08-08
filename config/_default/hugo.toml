@@ -1,0 +1,20 @@
+baseURL = 'https://genway.com.cn/'
+theme = 'hugo-theme-aug5th'
+
+defaultContentLanguage = 'en'
+defaultContentLanguageInSubdir = false
+
+[params]
+    themestyle = 'red'
+    multilingual = true
+
+# 用于渲染的参数
+[markup]
+    defaultMarkdownHandler = 'goldmark'
+    [markup.goldmark.renderer]
+        unsafe = true
+
+[module]
+  [module.hugoVersion]
+    extended = true
+    min = "0.148.2"

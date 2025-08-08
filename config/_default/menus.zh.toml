@@ -1,0 +1,17 @@
+[[main]]
+  name = '首页'
+  identifier = "Home"
+  pageRef = '/'
+  weight = 10
+
+[[main]]
+  name = '博客'
+  identifier = "Blog"
+  pageRef = '/blog'
+  weight = 20
+
+[[main]]
+  name = '关于'
+  identifier = "About"
+  pageRef = '/about'
+  weight = 30
