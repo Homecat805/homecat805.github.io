@@ -2,7 +2,7 @@ baseURL = 'https://genway.com.cn/'
 theme = 'hugo-theme-aug5th'
 
 # 默认语言配置
-defaultContentLanguage = 'en'
+defaultContentLanguage = 'zh'
 
 [params]
     themestyle = 'red'
