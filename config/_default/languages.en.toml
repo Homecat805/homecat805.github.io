@@ -1,7 +1,6 @@
 title = 'Aug5th'
 
-contentDir = 'content/en'
-languageName = 'English'
+languageName = 'EN'
 languageCode = 'en-US'
 
 copyright = 'All rights reserved'
