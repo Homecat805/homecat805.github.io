@@ -39,12 +39,12 @@ Ubuntu 桌面系统是非常优秀的开源软件，提供了基本应用程序�
 APT 是一个在 Debian 和 Ubuntu 中的包管理器，apt 命令提供了查找、安装、升级、删除某一个、一组甚至全部软件包的命令，命令简洁，容易记忆。
 
 ```
-sudo add-apt-repository ppa:<软件包名> //加载软件包 </br>
-sudo add-apt-repository --remove ppa:<软件包名> //卸载附加软件包</br>
-sudo apt update //更新软件包</br>
-sudo apt autoremove //卸载多余的软件包</br>
-sudo apt install <程序名></br>
-sudo apt remove <程序名> //删除应用（保留配置文件）</br>
+sudo add-apt-repository ppa:<软件包名> //加载软件包 
+sudo add-apt-repository --remove ppa:<软件包名> //卸载附加软件包
+sudo apt update //更新软件包
+sudo apt autoremove //卸载多余的软件包
+sudo apt install <程序名>
+sudo apt remove <程序名> //删除应用（保留配置文件）
 sudo apt --purge remove <程序名> //删除应用(不保留配置文件)
 ```
 
@@ -55,13 +55,13 @@ SNAP 是一种由 Ubuntu 主导的 Linux 通用软件包格式，用于解决 Li
 官网：[https://snapcraft.io](https://snapcraft.io)
 
 ```
-sudo snap find <软件包名> 或 sudo snap search <软件包名> //搜索软件包</br>
-sudo snap info <软件包名> //查询软件包信息</br>
-sudo snap list <软件包名> //列出已安装软件包详细信息</br>
-sudo snap install <软件包名> //安装软件包</br>
-sudo snap remove <软件包名> //卸载软件包</br>
-sudo snap refresh //更新所有软件包</br>
-sudo snap refrech <软件包名> //更新指定软件包</br>
-sudo snap revert //撤销更新所有软件包</br>
-sudo snap revert <软件包名> //撤销更新制定软件包</br>
+sudo snap find <软件包名> 或 sudo snap search <软件包名> //搜索软件包
+sudo snap info <软件包名> //查询软件包信息
+sudo snap list <软件包名> //列出已安装软件包详细信息
+sudo snap install <软件包名> //安装软件包
+sudo snap remove <软件包名> //卸载软件包
+sudo snap refresh //更新所有软件包
+sudo snap refrech <软件包名> //更新指定软件包
+sudo snap revert //撤销更新所有软件包
+sudo snap revert <软件包名> //撤销更新制定软件包
 ```
