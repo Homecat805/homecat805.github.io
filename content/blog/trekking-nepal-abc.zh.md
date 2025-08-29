@@ -4,9 +4,9 @@ date = 2024-07-29T21:58:50+08:00
 draft = false
 categories = "行者无疆"
 tags = ["尼泊尔"]
-series = "headline"
 [params]
-    author = "家猫"
+    author = 'Homecat'
+    thumbnail = 'https://pic.imgdb.cn/item/63beb6b5be43e0d30e3aa671.jpg'
 +++
 
 安娜普尔纳（Annapurana）地区位于尼泊尔北部的喜马拉雅山中段，有两条成熟且知名的徒步线路：一条去往安娜普尔纳大本营ABC（Annapurna Base Camp），另一条围绕着安娜普尔纳群峰行进的环线ACT（Annapurna Circle Trail）。
