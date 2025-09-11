@@ -1,3 +1,6 @@
 [submodule "themes/hugo-theme-aug5th"]
 	path = themes/hugo-theme-aug5th
 	url = git@github.com:Homecat805/hugo-theme-aug5th.git
+[submodule "themes/hugo-theme-walden"]
+	path = themes/hugo-theme-walden
+	url = git@github.com:Homecat805/hugo-theme-walden.git

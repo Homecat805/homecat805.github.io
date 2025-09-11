@@ -8,5 +8,9 @@
     pageRef = '/blog'
     weight = 20
 
+[[main]]
+    name = '笔记'
+    pageRef = '/document'
+    weight = 30
 
 

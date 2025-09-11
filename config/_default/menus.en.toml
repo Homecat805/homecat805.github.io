@@ -7,3 +7,8 @@
     name = 'Blog'
     pageRef = '/blog'
     weight = 20
+
+[[main]]
+    name = 'Document'
+    pageRef = '/document'
+    weight = 30

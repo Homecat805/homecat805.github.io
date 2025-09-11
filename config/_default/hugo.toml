@@ -1,11 +1,17 @@
 baseURL = 'https://genway.com.cn/'
-theme = 'hugo-theme-aug5th'
+theme = 'hugo-theme-walden'
 
 # 默认语言配置
 defaultContentLanguage = 'zh'
 
 [params]
     themestyle = 'red'
+    showLangSwitch = false
+
+[taxonomies]
+    category = 'categories'
+    tag = 'tags'
+    series = 'series'
 
 # 用于渲染的参数
 [markup]
@@ -16,4 +22,4 @@ defaultContentLanguage = 'zh'
 [module]
     [module.hugoVersion]
         extended = true
-        min = "0.148.2"
+        min = "0.149.0"
