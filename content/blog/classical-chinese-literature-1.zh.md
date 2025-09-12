@@ -7,8 +7,8 @@ tags =['王羲之','陶渊明','王勃','李白','刘禹锡','范仲淹','欧阳
 series = 'headline'
 [params]
     author = 'Homecat'
-    thumbnail = 'https://s3.bmp.ovh/imgs/2025/09/12/7284d49abb51c352.jpg'
-    headline = 'https://s3.bmp.ovh/imgs/2025/09/12/d0ff36ba9d743484.jpg'
+    thumbnail = 'https://s3.bmp.ovh/imgs/2025/09/12/a54b49d6c1fda2d5.jpg'
+    headline = 'https://s3.bmp.ovh/imgs/2025/09/12/b4c4bdbb3482517c.jpg'
 +++
 
 读文言经典非为复古，实乃借古人之智慧，启今人之心扉。其字里行间蕴藏之时空密码，待有心人潜心解读，终将化为个体生命之独特光辉。
