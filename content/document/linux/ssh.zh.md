@@ -2,7 +2,7 @@
 date = '2025-09-23T06:13:02Z'
 draft = false
 title = 'SSH 基本用法'
-weight = 1
+weight = 2
 [params]
     author = 'Homecat'
 +++
