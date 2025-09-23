@@ -111,11 +111,12 @@ services:
 - 执行
 
 ```
+# 设置环境变量
+export CURRENT_UID=$(id -u zhong)
+export CURRENT_GID=$(id -g zhong)
+
 # 启动服务
 docker compose up
-
-# 进入容器
-docker-compose exec myblog /bin/bash
 
 # 停止服务
 docker compose down
