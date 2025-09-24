@@ -71,54 +71,71 @@ CMD ["hugo", "version"]
 docker build -t hugo:0.150.0 .
 ```
 
-## 生成容器
+## 镜像使用
 
-### 方式一 docker run
+### 方式一：docker run
 
-```
-docker run -it --rm \
-    --name myblog \
-    -p 1313:1313 \
-    -v /home/zhong/www/sites/myblog:/src \
-    -v /etc/passwd:/etc/passwd:ro \
-    -v /etc/group:/etc/group:ro \
-    --user $(id -u zhong):$(id -g zhong) \
-    hugo:0.150.0 \
-    /bin/bash
-```
+- 生成容器
 
-### 方式二 docker compose
+  ```
+  docker run -it --rm \
+      --name myblog \
+      -p 1313:1313 \
+      -v /home/zhong/www/sites/myblog:/src \
+      -v /etc/passwd:/etc/passwd:ro \
+      -v /etc/group:/etc/group:ro \
+      --user $(id -u zhong):$(id -g zhong) \
+      hugo:0.150.0 \
+      /bin/bash
+  ```
+
+### 方式二：docker compose
 
 - docker-compose.yaml
 
-```
-version: '3.8'
-services:
-  myblog:
-    image: hugo:0.150.0
-    container_name: myblog
-    user: "${CURRENT_UID}:${CURRENT_GID}"
-    ports:
-      - "1313:1313"
-    volumes:
-      - /home/zhong/www/sites/myblog:/src
-      - /etc/passwd:/etc/passwd:ro
-      - /etc/group:/etc/group:ro
-    working_dir: /src
-    command: hugo server -D --bind 0.0.0.0 --baseURL http://服务器ip地址:1313
-```
+  ```
+  services:
+    myblog:
+      image: hugo:0.150.0
+      container_name: myblog
+      user: "${CURRENT_UID}:${CURRENT_GID}"
+      ports:
+        - "1313:1313"
+      volumes:
+        - /home/zhong/www/sites/myblog:/src
+        - /etc/passwd:/etc/passwd:ro
+        - /etc/group:/etc/group:ro
+      working_dir: /src
+      entrypoint: /bin/bash
+      tty: true
+      stdin_open: true
+  ```
 
-- 执行
+- 生成容器  
 
-```
-# 设置环境变量
-export CURRENT_UID=$(id -u zhong)
-export CURRENT_GID=$(id -g zhong)
+  ```
+  # 设置环境变量
+  export CURRENT_UID=$(id -u zhong)
+  export CURRENT_GID=$(id -g zhong)
 
-# 启动服务
-docker compose up
+  # 启动服务
+  docker compose up
+  ```
+- 进入容器
 
-# 停止服务
-docker compose down
+  生成容器后，如要进入容器，另开一个 shell 窗口。
 
-```
+  ```
+  # 设置环境变量
+  export CURRENT_UID=$(id -u zhong)
+  export CURRENT_GID=$(id -g zhong)
+
+  # 启动服务
+  docker compose exec myblog /bin/bash
+  ```
+
+- 关闭容器
+
+  ```
+  docker compose down
+  ```
