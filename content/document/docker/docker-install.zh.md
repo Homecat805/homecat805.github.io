@@ -1,7 +1,7 @@
 +++
 date = '2025-09-17T14:30:19+08:00'
 draft = false
-title = 'Docker 安装'
+title = 'Ubuntu 22.04 安装 Docker 容器引擎'
 weight = 1
 [params]
     author = 'Homecat'
@@ -11,81 +11,31 @@ Docker 是一个开源的应用容器引擎，通过容器的生成和使用加�
 
 <!--more-->
 
-## 安装
+## 使用官方仓库安装
 
-Docker在 [https://get.docker.com/](https://get.docker.com/) 提供了安装脚本，可以以非交互方式将Docker安装。
-
-### 获取脚本及安装命令
-
+### 更新软件包索引并安装依赖
 ```
-curl -fsSL https://get.docker.com -o get-docker.sh
-sudo sh get-docker.sh
-```
-### 安装提示信息
-
-```
-# Executing docker install script, commit: e5543d473431b782227f8908005543bb4389b8de
-+ sh -c apt-get update -qq >/dev/null
-+ sh -c DEBIAN_FRONTEND=noninteractive apt-get install -y -qq apt-transport-https ca-certificates curl >/dev/null
-debconf: delaying package configuration, since apt-utils is not installed
-+ sh -c install -m 0755 -d /etc/apt/keyrings
-+ sh -c curl -fsSL "https://download.docker.com/linux/ubuntu/gpg" | gpg --dearmor --yes -o /etc/apt/keyrings/docker.gpg
-+ sh -c chmod a+r /etc/apt/keyrings/docker.gpg
-+ sh -c echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu jammy stable" > /etc/apt/sources.list.d/docker.list
-+ sh -c apt-get update -qq >/dev/null
-+ sh -c DEBIAN_FRONTEND=noninteractive apt-get install -y -qq docker-ce docker-ce-cli containerd.io docker-compose-plugin docker-ce-rootless-extras docker-buildx-plugin >/dev/null
-debconf: delaying package configuration, since apt-utils is not installed
-+ sh -c docker version
-Client: Docker Engine - Community
- Version:           26.1.1
- API version:       1.45
- Go version:        go1.21.9
- Git commit:        4cf5afa
- Built:             Tue Apr 30 11:47:53 2024
- OS/Arch:           linux/amd64
- Context:           default
-
-Server: Docker Engine - Community
- Engine:
-  Version:          26.1.1
-  API version:      1.45 (minimum version 1.24)
-  Go version:       go1.21.9
-  Git commit:       ac2de55
-  Built:            Tue Apr 30 11:47:53 2024
-  OS/Arch:          linux/amd64
-  Experimental:     false
- containerd:
-  Version:          1.6.31
-  GitCommit:        e377cd56a71523140ca6ae87e30244719194a521
- runc:
-  Version:          1.1.12
-  GitCommit:        v1.1.12-0-g51d5e94
- docker-init:
-  Version:          0.19.0
-  GitCommit:        de40ad0
-
-================================================================================
-
-To run Docker as a non-privileged user, consider setting up the
-Docker daemon in rootless mode for your user:
-
-    dockerd-rootless-setuptool.sh install
-
-Visit https://docs.docker.com/go/rootless/ to learn about rootless mode.
-
-
-To run the Docker daemon as a fully privileged service, but granting non-root
-users access, refer to https://docs.docker.com/go/daemon-access/
-
-WARNING: Access to the remote API on a privileged Docker daemon is equivalent
-         to root access on the host. Refer to the 'Docker daemon attack surface'
-         documentation for details: https://docs.docker.com/go/attack-surface/
-
-================================================================================
+sudo apt update
+sudo apt install apt-transport-https ca-certificates curl gnupg lsb-release
 ```
 
-### 验证安装完成
+### 添加 Docker 官方 GPG 密钥
+```
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+```
 
+### 添加 Docker 软件仓库
+```
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+```
+
+### Docker Engine
+```
+sudo apt update
+sudo apt install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+```
+
+### 验证安装结果
 ```
 docker run --rm hello-world
 Unable to find image 'hello-world:latest' locally
@@ -117,7 +67,7 @@ For more examples and ideas, visit:
 
 ```
 
-### 查看安装版本
+## 查看安装版本
 
 ```
 sudo docker version
@@ -152,11 +102,11 @@ Server: Docker Engine - Community
 
 ```
 
-## 启动 Docker
+## 启动 Docker 服务并设置开机自启
 
 ```
-sudo systemctl enable docker
 sudo systemctl start docker
+sudo systemctl enable docker
 ```
 
 ## 授予非 root 用户特权
