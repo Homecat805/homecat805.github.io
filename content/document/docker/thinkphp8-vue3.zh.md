@@ -236,6 +236,20 @@ root@019cd9a07351:/app# npm create vue@latest .
 root@019cd9a07351:/app# npm install
 root@019cd9a07351:/app# exit      //退出容器   
 ```
+### 配置服务
+
+- vite.config.js
+```
+...
+export default defineConfig({
+  ...
+  server: {
+    host: '0.0.0.0',  // 允许所有IP访问
+    port: 5173
+  },
+  ...
+})
+```
 
 ### 运行开发环境
 
