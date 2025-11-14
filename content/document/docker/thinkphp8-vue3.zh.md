@@ -220,8 +220,8 @@ root@e0adfedefbe8:/var/www/html# exit      //退出容器
 
 ### 访问 ThinkPHP 和 Mysql
 
-- [ThinkPHP](http://localhost)
-- [Mysql 数据库](http://localhost:8080)
+- ThinkPHP [http://localhost](http://localhost)
+- Mysql [http://localhost:8080](http://localhost:8080)
 
 ## 搭建 Vue 作业环境
 
@@ -258,4 +258,4 @@ docker compose exec node npm run dev
 ```
 ### 访问 Vue
 
-- [Vue](http://localhost:5173)
+- Vue [http://localhost:5173](http://localhost:5173)
