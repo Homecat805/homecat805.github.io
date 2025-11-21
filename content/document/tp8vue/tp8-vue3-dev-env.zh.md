@@ -256,6 +256,24 @@ No security vulnerability advisories found.
 cd test
 sudo chmod 777 backend/runtime
 ```
+### 修改环境参数
+
+ThinkPHP 安装后会生成 .example.env 文件，复制该文件并命名为 .env 并修改文件内容，与 /test/.env 文件匹配。
+
+```
+APP_DEBUG = true
+
+DB_TYPE = mysql
+DB_HOST = db
+DB_NAME = test
+DB_USER = homecat
+DB_PASS = 680805
+DB_PORT = 3306
+DB_CHARSET = utf8
+
+DEFAULT_LANG = zh-cn
+```
+
 ### 访问网站
 
 安装成功后，可访问 Thinkphp 和 Mysql 网站。
