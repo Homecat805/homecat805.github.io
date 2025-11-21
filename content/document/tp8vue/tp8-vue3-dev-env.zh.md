@@ -1,0 +1,23 @@
++++
+date = '2025-11-21T12:25:08+08:00'
+draft = false
+title = 'ThinkPHP8 + Vue3 开发环境搭建'
+weight = 1
+[params]
+    author = 'Homecat'
++++
+
+ThinkPHP是一个免费开源的，快速、简单的面向对象的轻量级PHP开发框架，最新稳定版本是 v8.1.3；Vue 是性能出色、适用场景丰富的 Web 前端框架，最新稳定版本是 v3.5.24。 利用 Docker 搭建一个将 Thinkphp 作为后端、Vue 作为前端，前后端分离的开发环境。
+
+<!--more-->
+
+## 镜像选用
+
+利用 Docker 搭建开发环境的好处是不受操作系统的限制，无论 Windows 还是 Linux 操作系统，只要安装好 Docker 就可以拥有相同的开发环境。在 Ubuntu 22.04 操作系统上安装 Docker 的方法，参看[Ubuntu 22.04 安装 Docker 容器引擎](https://genway.com.cn/document/docker/docker-install/)。
+
+搭建 ThinkPHP8 + Vue3 开发环境需要用到以下镜像：
+
+- php:8.0-apache 用于 Web 和 PHP 服务
+- mysql:8.0 用于 Mysql 数据库服务
+- adminer:5.4.1 数据库管理工具
+- node:22.20 用于 Vue 服务
