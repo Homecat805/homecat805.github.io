@@ -22,18 +22,18 @@ ThinkPHP是一个免费开源的，快速、简单的面向对象的轻量级PHP
 - adminer:5.4.1 数据库管理工具
 - node:22.20 用于 Vue 服务
 
-## 搭建环境
+## 搭建准备
 
 ### 作业目录
 
 ```
-Porject ─┬─ backend                  后端目录 用于安装 ThinkPHP
-         ├─ frontend                 前端目录 用于安装 Vue
-         ├─ php ─┬─ Dockerfile       用于重写 php:8.0-apache 镜像
-         │       └─ 000-default.conf 用于重写 Web 根目录
-         ├─ mysql ─ init.sql         数据库初始化文件
-         ├─ .env                     建立数据库的环境变量 
-         └─ docker-compose.yaml      用于生成容器
+test ─┬─ backend                  后端目录 用于安装 ThinkPHP
+      ├─ frontend                 前端目录 用于安装 Vue
+      ├─ php ─┬─ Dockerfile       用于重写 php:8.0-apache 镜像
+      │       └─ 000-default.conf 用于重写 Web 根目录
+      ├─ mysql ─ init.sql         数据库初始化文件
+      ├─ .env                     建立数据库的环境变量 
+      └─ docker-compose.yaml      用于生成容器
 ```
 
 ### 相关文件
@@ -49,6 +49,7 @@ Porject ─┬─ backend                  后端目录 用于安装 ThinkPHP
 使用 docker compose 命令生成容器。
 
 ```
+cd test
 docker compose up -d
 
 ... //无数安装信息
@@ -74,3 +75,109 @@ test_db        mysql:8.0       "docker-entrypoint.s…"   db        4 minutes ag
 test_vue       node:22.20      "docker-entrypoint.s…"   node      4 minutes ago   Up 4 minutes   0.0.0.0:80->5173/tcp, [::]:80->5173/tcp
 test_web       test-web        "docker-php-entrypoi…"   web       4 minutes ago   Up 4 minutes   0.0.0.0:8000->80/tcp, [::]:8000->80/tcp
 ```
+
+## 搭建 ThinkPHP8 环境
+
+### 安装 ThinkPHP8
+
+```
+cd test
+docker compose exec web composer create-project topthink/think . 
+
+... //无数安装信息
+
+Succeed!
+4 packages you are using are looking for funding.
+Use the `composer fund` command to find out more!
+No security vulnerability advisories found.
+```
+
+### 修改目录属性
+
+修改 /backend/runtime 目录属性，保证 ThinkPHP 正常运行。
+
+```
+cd test
+sudo chmod 777 backend/runtime
+```
+### 访问网站
+
+安装成功后，可访问 Thinkphp 和 Mysql 网站。
+
+- ThinkPHP [http://localhost:8000](http://localhost:8000)
+- Mysql [http://localhost:8080](http://localhost:8080)
+
+## 搭建 Vue3 环境
+
+### 安装 Vue3
+
+```
+cd test
+//更新 npm 到 11.6.2 版
+docker compose exec node npm install -g npm@11.6.2 
+// 安装 vue
+docker compose exec node npm create vue@latest .
+
+// 安装信息
+> npx
+> "create-vue" .
+
+┌  Vue.js - The Progressive JavaScript Framework
+│
+◇  Package name:
+│  app
+│
+◇  Select features to include in your project: (↑/↓ to navigate, space to select, a to toggle all, enter to confirm)
+│  TypeScript // 选择 TypeScript
+│
+◇  Select experimental features to include in your project: (↑/↓ to navigate, space to select, a to toggle all, enter to confirm)
+│  none // 放弃选择
+│
+◇  Skip all example code and start with a blank Vue project?
+│  Yes // 放弃示例
+
+Scaffolding project in /app...
+│
+└  Done. Now run:
+
+   npm install
+   npm run dev
+
+| Optional: Initialize Git in your project directory with:
+  
+   git init && git add -A && git commit -m "initial commit"
+```
+
+### 安装插件
+
+```
+docker compose exec node npm install
+```
+
+### 配置服务
+
+配置文件 /frontend/vite.config.ts
+
+```
+export default defineConfig({
+  ...
+  server: {
+    host: '0.0.0.0',  // 允许所有IP访问
+    port: 5173
+  },
+  ...
+})
+```
+
+
+
+
+### 启动 vue 服务
+```
+docker compose exec node npm run dev
+```
+
+### 访问网站
+
+- Vue [http://localhost](http://localhost)
+
