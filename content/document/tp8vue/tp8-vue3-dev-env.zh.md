@@ -39,166 +39,166 @@ test ─┬─ backend                  后端目录 用于安装 ThinkPHP
 ### 相关文件
 
 - 容器生成文件 docker-compose.yaml 
-```
-services:
-  # PHP + Apache 服务
-  web:
-    build:
-      context: ./php
-      dockerfile: Dockerfile
-    container_name: test_web
-    volumes:
-      - ./backend:/var/www/html
-    ports:
-      - "8000:80"
-    depends_on:
-      - db
-    networks:
-      - test_network
+  ```
+  services:
+    # PHP + Apache 服务
+    web:
+      build:
+        context: ./php
+        dockerfile: Dockerfile
+      container_name: test_web
+      volumes:
+        - ./backend:/var/www/html
+      ports:
+        - "8000:80"
+      depends_on:
+        - db
+      networks:
+        - test_network
 
-  # MySQL 服务
-  db:
-    image: mysql:8.0
-    container_name: test_db
-    environment:
-      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD} 
-      MYSQL_DATABASE: ${DB_DATABASE} 
-      MYSQL_USER: ${DB_USER} 
-      MYSQL_PASSWORD: ${DB_PASSWORD} 
-    volumes:
-      - mysql_data:/var/lib/mysql
-      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
-    ports:
-      - "3306:3306"
-    networks:
-      - test_network
+    # MySQL 服务
+    db:
+      image: mysql:8.0
+      container_name: test_db
+      environment:
+        MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD} 
+        MYSQL_DATABASE: ${DB_DATABASE} 
+        MYSQL_USER: ${DB_USER} 
+        MYSQL_PASSWORD: ${DB_PASSWORD} 
+      volumes:
+        - mysql_data:/var/lib/mysql
+        - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+      ports:
+        - "3306:3306"
+      networks:
+        - test_network
 
-  # Adminer 数据库管理
-  adminer:
-    image: adminer:5.4.1
-    container_name: test_adminer
-    ports:
-      - "8080:8080"
-    depends_on:
-      - db
-    networks:
-      - test_network
+    # Adminer 数据库管理
+    adminer:
+      image: adminer:5.4.1
+      container_name: test_adminer
+      ports:
+        - "8080:8080"
+      depends_on:
+        - db
+      networks:
+        - test_network
 
-  # Node.js 服务 (用于 Vue 开发)
-  node:
-    image: node:22.20
-    container_name: test_vue
-    working_dir: /app
-    volumes:
-      - ./frontend:/app
-    ports:
-      - "80:5173"  # Vite 默认端口
-    command: tail -f /dev/null  # 保持容器运行
-    networks:
-      - test_network
+    # Node.js 服务 (用于 Vue 开发)
+    node:
+      image: node:22.20
+      container_name: test_vue
+      working_dir: /app
+      volumes:
+        - ./frontend:/app
+      ports:
+        - "80:5173"  # Vite 默认端口
+      command: tail -f /dev/null  # 保持容器运行
+      networks:
+        - test_network
 
-volumes:
-  mysql_data:
+  volumes:
+    mysql_data:
 
-networks:
-  test_network:
-    driver: bridge
-```
+  networks:
+    test_network:
+      driver: bridge
+  ```
 - 生成容器时需要的数据库环境参数 .env
-```
-DB_ROOT_PASSWORD=123456
-DB_DATABASE=test
-DB_USER=homecat
-DB_PASSWORD=680805
-```
+  ```
+  DB_ROOT_PASSWORD=123456
+  DB_DATABASE=test
+  DB_USER=homecat
+  DB_PASSWORD=680805
+  ```
 - 数据库初始化文件 /mysql/init.sql
-```
-CREATE DATABASE IF NOT EXISTS `test` 
-DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+  ```
+  CREATE DATABASE IF NOT EXISTS `test` 
+  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-USE `test`;
+  USE `test`;
 
-CREATE TABLE IF NOT EXISTS `user` (
-  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'User ID',
-  `username` VARCHAR(50) NOT NULL UNIQUE COMMENT 'User Name',
-  `password_hash` VARCHAR(255) NOT NULL COMMENT 'Password Hash',
-  `email` VARCHAR(100) NOT NULL UNIQUE COMMENT 'Email',
-  `email_verified` TINYINT(1) DEFAULT 0 COMMENT 'Email Verified:0-no,1-yes',
-  `usertype` TINYINT(1) DEFAULT 0 COMMENT 'User Type:0-visitor,1-employee,2-admin',
-  `avatar` VARCHAR(255) DEFAULT NULL COMMENT 'Avatar URL',
-  `status` TINYINT(1) DEFAULT 1 COMMENT 'Account Status:0-disabled,1-enabled',
-  `last_login` TIMESTAMP DEFAULT NULL COMMENT 'Last Login Time',
-  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Account Create Time',
-  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Account Update Time',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='User Table';
-```
+  CREATE TABLE IF NOT EXISTS `user` (
+    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'User ID',
+    `username` VARCHAR(50) NOT NULL UNIQUE COMMENT 'User Name',
+    `password_hash` VARCHAR(255) NOT NULL COMMENT 'Password Hash',
+    `email` VARCHAR(100) NOT NULL UNIQUE COMMENT 'Email',
+    `email_verified` TINYINT(1) DEFAULT 0 COMMENT 'Email Verified:0-no,1-yes',
+    `usertype` TINYINT(1) DEFAULT 0 COMMENT 'User Type:0-visitor,1-employee,2-admin',
+    `avatar` VARCHAR(255) DEFAULT NULL COMMENT 'Avatar URL',
+    `status` TINYINT(1) DEFAULT 1 COMMENT 'Account Status:0-disabled,1-enabled',
+    `last_login` TIMESTAMP DEFAULT NULL COMMENT 'Last Login Time',
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Account Create Time',
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Account Update Time',
+    PRIMARY KEY (`id`)
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='User Table';
+  ```
 - 重写 php:8.0-apache 镜像文件 /php/Dockerfile
-```
-FROM php:8.0-apache
+  ```
+  FROM php:8.0-apache
 
-# 备份原有的源列表，并更换为阿里云镜像源
-RUN cp /etc/apt/sources.list /etc/apt/sources.list.bak && \
-    sed -i 's/deb.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list
+  # 备份原有的源列表，并更换为阿里云镜像源
+  RUN cp /etc/apt/sources.list /etc/apt/sources.list.bak && \
+      sed -i 's/deb.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list
 
-# 安装系统依赖
-RUN apt-get update && apt-get install -y \
-    curl \
-    libpng-dev \
-    libonig-dev \
-    libxml2-dev \
-    zip \
-    unzip \
-    libzip-dev \
-    default-mysql-client
+  # 安装系统依赖
+  RUN apt-get update && apt-get install -y \
+      curl \
+      libpng-dev \
+      libonig-dev \
+      libxml2-dev \
+      zip \
+      unzip \
+      libzip-dev \
+      default-mysql-client
 
-# 安装 PHP 扩展
-RUN docker-php-ext-install \
-    mysqli \
-    pdo_mysql \
-    mbstring \
-    exif \
-    pcntl \
-    bcmath \
-    gd \
-    zip \
-    sockets
+  # 安装 PHP 扩展
+  RUN docker-php-ext-install \
+      mysqli \
+      pdo_mysql \
+      mbstring \
+      exif \
+      pcntl \
+      bcmath \
+      gd \
+      zip \
+      sockets
 
 
-# 安装 Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+  # 安装 Composer
+  COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# 启用 Apache mod_rewrite
-RUN a2enmod rewrite
+  # 启用 Apache mod_rewrite
+  RUN a2enmod rewrite
 
-# 设置工作目录
-WORKDIR /var/www/html
+  # 设置工作目录
+  WORKDIR /var/www/html
 
-# 复制 Apache 配置
-COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
+  # 复制 Apache 配置
+  COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
 
-# 修改文件权限
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html
+  # 修改文件权限
+  RUN chown -R www-data:www-data /var/www/html \
+      && chmod -R 755 /var/www/html
 
-EXPOSE 80
-```
+  EXPOSE 80
+  ```
 - 重写 web 服务根目录文件 /php/000-default.conf 
-```
-<VirtualHost *:80>
-    ServerAdmin webmaster@localhost
-    DocumentRoot /var/www/html/public
+  ```
+  <VirtualHost *:80>
+      ServerAdmin webmaster@localhost
+      DocumentRoot /var/www/html/public
 
-    ErrorLog ${APACHE_LOG_DIR}/error.log
-    CustomLog ${APACHE_LOG_DIR}/access.log combined
+      ErrorLog ${APACHE_LOG_DIR}/error.log
+      CustomLog ${APACHE_LOG_DIR}/access.log combined
 
-    <Directory /var/www/html/public>
-        Options Indexes FollowSymLinks
-        AllowOverride All
-        Require all granted
-    </Directory>
-</VirtualHost>
-```
+      <Directory /var/www/html/public>
+          Options Indexes FollowSymLinks
+          AllowOverride All
+          Require all granted
+      </Directory>
+  </VirtualHost>
+  ```
 
 ### 生成容器
 
@@ -358,7 +358,7 @@ docker compose exec node npm run dev
 - 通过以上工作，ThinkPHP8 和 Vue3 开发环境基本搭建完成，搭建好的文件存放在 gitee.com 上，仓库地址为[tp8-vue3](https://gitee.com/homecat805/tp8-vue3-setup)。
 - 可以通过以上步骤全新搭建，也可以直接克隆文件仓库，具体方法参看仓库的 README 文件。
 - 在搭建过程中，会发生文件不能修改的问题，原因是 Docker 是以 root 运行的，而 /frontend/vite.config.ts 及 /backend/.example.env 等文件是由 root 生成的，非 root 用户不能修改。可以通过修改文件和目录所有者解决，具体的命令为：
-```
-cd test
-sudo chown -R 你的用户名:你的用户组 frontend backend
-```
+  ```
+  cd test
+  sudo chown -R 你的用户名:你的用户组 frontend backend
+  ```
