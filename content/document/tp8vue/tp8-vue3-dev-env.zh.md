@@ -151,6 +151,7 @@ Scaffolding project in /app...
 ### 安装插件
 
 ```
+cd test
 docker compose exec node npm install
 ```
 
@@ -168,12 +169,11 @@ export default defineConfig({
   ...
 })
 ```
-
-
-
+> 在更新 vite.config.ts 时，会提示不能修改的信息，原因是 Docker 是以 root 运行的，而 vite.config.ts 是由 root 生成的，非 root 用户不能修改，解决办法是用 `sudo chown 用户名:用户组 vite.config.ts` 命令修改文件的所有者。
 
 ### 启动 vue 服务
 ```
+cd test
 docker compose exec node npm run dev
 ```
 
