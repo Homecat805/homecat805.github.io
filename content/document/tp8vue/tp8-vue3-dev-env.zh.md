@@ -343,8 +343,6 @@ export default defineConfig({
   ...
 })
 ```
-> 在更新 vite.config.ts 时，会提示不能修改的信息，原因是 Docker 是以 root 运行的，而 vite.config.ts 是由 root 生成的，非 root 用户不能修改，解决办法是用 "sudo chown 用户名:用户组 vite.config.ts" 命令修改文件的所有者。
-
 ### 启动 vue 服务
 ```
 cd test
@@ -357,3 +355,10 @@ docker compose exec node npm run dev
 
 ## 总结
 
+- 通过以上工作，ThinkPHP8 和 Vue3 开发环境基本搭建完成，搭建好的文件存放在 gitee.com 上，仓库地址为[tp8-vue3](https://gitee.com/homecat805/tp8-vue3-setup)。
+- 可以通过以上步骤全新搭建，也可以直接克隆文件仓库，具体方法参看仓库的 README 文件。
+- 在搭建过程中，会发生文件不能修改的问题，原因是 Docker 是以 root 运行的，而 /frontend/vite.config.ts 及 /backend/.example.env 等文件是由 root 生成的，非 root 用户不能修改。可以通过修改文件和目录所有者解决，具体的命令为：
+```
+cd test
+sudo chown -R 你的用户名:你的用户组 frontend backend
+```
