@@ -450,6 +450,28 @@ fb7bed3c0776
 
     ~/test$ sudo chown -R 用户uid:用户gid frontend/vue
   ```
+### 配置 ThinkPHP 访问 MySQL backend/thinkphp/.env
+
+- 复制环境文件
+```
+cd backend/thinkphp
+cp .example.env
+```
+
+- 修改 .env 文件
+```
+APP_DEBUG = true    //是否开启报错
+
+DB_TYPE = mysql     //数据库类别
+DB_HOST = 127.0.0.1 // MySQL 服务器地址
+DB_NAME = test      // 数据库名
+DB_USER = username  // 用户名
+DB_PASS = password  // 用户密码
+DB_PORT = 3306      // 服务器端口
+DB_CHARSET = utf8   // 数据库字符定义
+
+DEFAULT_LANG = zh-cn
+```
 
 ### 配置 Vue 访问限制
 
@@ -545,5 +567,22 @@ fb7bed3c0776
   ```
 
   ### 启动开发环境
+  ```
+  ~/test$ docker compose --profile dev up
+
+  [+] Running 4/4
+  ✔ Network newtest_app_net      Created            0.2s 
+  ✔ Container vue-dev-server     Created            1.3s 
+  ✔ Container vue-prod-server    Created            1.3s 
+  ✔ Container php-apache-server  Created            1.3s 
+
+  ...
+
+  vue-dev-server     |   ➜  Local:   http://localhost:5173/
+  vue-dev-server     |   ➜  Network: http://172.18.0.3:5173/
+  vue-dev-server     |   ➜  Vue DevTools: Open http://localhost:5173/__devtools__/ as a separate window
+  vue-dev-server     |   ➜  Vue DevTools: Press Alt(⌥)+Shift(⇧)+D in App to toggle the Vue DevTools
+
+  ```
 
 
