@@ -156,116 +156,116 @@ test ┬ backend ┬ php ┬ Dockerfile        重写 php:8.0-apache 镜像
 ### 相关文件
 
 - Docker Compose 文件：docker-compose.yaml
-```
-services:
-  # PHP + Apache 服务
-  php-apache:
-    build:
-      context: .   
-      dockerfile: ./backend/php/Dockerfile
-    image: php:8.0-apache-custom
-    container_name: php-apache-server
-    volumes:
-      - ./backend/thinkphp:/var/www/html
-    ports:
-      - "8000:80"
-    networks:
-      - app_net
+  ```
+  services:
+    # PHP + Apache 服务
+    php-apache:
+      build:
+        context: .   
+        dockerfile: ./backend/php/Dockerfile
+      image: php:8.0-apache-custom
+      container_name: php-apache-server
+      volumes:
+        - ./backend/thinkphp:/var/www/html
+      ports:
+        - "8000:80"
+      networks:
+        - app_net
 
-  # Vue 开发环境
-  vue-dev:
-    image: node:22.20
-    container_name: vue-dev-server
-    working_dir: /app
-    volumes:
-      - ./frontend/vue:/app
-    ports:
-      - "5173:5173"
-    command: sh -c "npm install && npm run dev"
-    networks:
-      - app_net
-    profiles: ["dev"]
+    # Vue 开发环境
+    vue-dev:
+      image: node:22.20
+      container_name: vue-dev-server
+      working_dir: /app
+      volumes:
+        - ./frontend/vue:/app
+      ports:
+        - "5173:5173"
+      command: sh -c "npm install && npm run dev"
+      networks:
+        - app_net
+      profiles: ["dev"]
 
-  # Vue 构建服务
-  vue-build:
-    image: node:22.20
-    container_name: vue-builder
-    working_dir: /app
-    volumes:
-      - ./frontend/vue:/app
-      - ./frontend/vue/dist:/app/dist
-    command: sh -c "npm install && npm run build"
-    networks:
-      - app_net
-    profiles: ["build"]
+    # Vue 构建服务
+    vue-build:
+      image: node:22.20
+      container_name: vue-builder
+      working_dir: /app
+      volumes:
+        - ./frontend/vue:/app
+        - ./frontend/vue/dist:/app/dist
+      command: sh -c "npm install && npm run build"
+      networks:
+        - app_net
+      profiles: ["build"]
 
-  # Apache 用于 Vue 生产服务
-  vue-prod:
-    image: httpd:2.4
-    container_name: vue-prod-server
-    volumes:
-      - ./frontend/vue/dist:/usr/local/apache2/htdocs 
-      - ./frontend/apache/httpd.conf:/usr/local/apache2/conf/httpd.conf
-    ports:
-      - "80:80"
-    networks:
-      - app_net
+    # Apache 用于 Vue 生产服务
+    vue-prod:
+      image: httpd:2.4
+      container_name: vue-prod-server
+      volumes:
+        - ./frontend/vue/dist:/usr/local/apache2/htdocs 
+        - ./frontend/apache/httpd.conf:/usr/local/apache2/conf/httpd.conf
+      ports:
+        - "80:80"
+      networks:
+        - app_net
 
-networks:
-  app_net:
-    driver: bridge
-```
+  networks:
+    app_net:
+      driver: bridge
+  ```
 
 - 重写 php:8.0-apache 镜像文件：Dockerfile
-```
-FROM php:8.0-apache
+  ```
+  FROM php:8.0-apache
 
-# 备份原有的源列表，并更换为阿里云镜像源
-RUN cp /etc/apt/sources.list /etc/apt/sources.list.bak && \
-    sed -i 's/deb.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list
+  # 备份原有的源列表，并更换为阿里云镜像源
+  RUN cp /etc/apt/sources.list /etc/apt/sources.list.bak && \
+      sed -i 's/deb.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list
 
-# 安装系统依赖
-RUN apt-get update && apt-get install -y \
-    curl \
-    libpng-dev \
-    libonig-dev \
-    libxml2-dev \
-    zip \
-    unzip \
-    libzip-dev \
-    default-mysql-client
+  # 安装系统依赖
+  RUN apt-get update && apt-get install -y \
+      curl \
+      libpng-dev \
+      libonig-dev \
+      libxml2-dev \
+      zip \
+      unzip \
+      libzip-dev \
+      default-mysql-client
 
-# 安装 PHP 扩展
-RUN docker-php-ext-install \
-    mysqli \
-    pdo_mysql \
-    mbstring \
-    exif \
-    pcntl \
-    bcmath \
-    gd \
-    zip \
-    sockets
+  # 安装 PHP 扩展
+  RUN docker-php-ext-install \
+      mysqli \
+      pdo_mysql \
+      mbstring \
+      exif \
+      pcntl \
+      bcmath \
+      gd \
+      zip \
+      sockets
 
 
-# 安装 Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+  # 安装 Composer
+  COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# 启用 Apache mod_rewrite
-RUN a2enmod rewrite
+  # 启用 Apache mod_rewrite
+  RUN a2enmod rewrite
 
-# 设置工作目录
-WORKDIR /var/www/html
+  # 设置工作目录
+  WORKDIR /var/www/html
 
-# 复制 Apache 配置
-COPY ./backend/php/000-default.conf /etc/apache2/sites-available/000-default.conf
+  # 复制 Apache 配置
+  COPY ./backend/php/000-default.conf /etc/apache2/sites-available/000-default.conf
 
-EXPOSE 80
-```
+  EXPOSE 80
+  ```
 
 - php:8.0-apache 配置文件
-```
-<VirtualHost *:80>
+  ```
+  <VirtualHost *:80>
     ServerAdmin webmaster@localhost
     DocumentRoot /var/www/html/public
 
@@ -273,59 +273,59 @@ EXPOSE 80
     CustomLog ${APACHE_LOG_DIR}/access.log combined
 
     <Directory /var/www/html/public>
-        Options Indexes FollowSymLinks
-        AllowOverride All
-        Require all granted
+      Options Indexes FollowSymLinks
+      AllowOverride All
+      Require all granted
     </Directory>
-</VirtualHost>
-```
+  </VirtualHost>
+  ```
 
 - apache 配置文件 
-```
-ServerRoot "/usr/local/apache2"
-Listen 80
+  ```
+  ServerRoot "/usr/local/apache2"
+  Listen 80
 
-LoadModule mpm_event_module modules/mod_mpm_event.so
-LoadModule authn_file_module modules/mod_authn_file.so
-LoadModule authn_core_module modules/mod_authn_core.so
-LoadModule authz_host_module modules/mod_authz_host.so
-LoadModule authz_groupfile_module modules/mod_authz_groupfile.so
-LoadModule authz_user_module modules/mod_authz_user.so
-LoadModule authz_core_module modules/mod_authz_core.so
-LoadModule access_compat_module modules/mod_access_compat.so
-LoadModule auth_basic_module modules/mod_auth_basic.so
-LoadModule reqtimeout_module modules/mod_reqtimeout.so
-LoadModule filter_module modules/mod_filter.so
-LoadModule mime_module modules/mod_mime.so
-LoadModule log_config_module modules/mod_log_config.so
-LoadModule env_module modules/mod_env.so
-LoadModule headers_module modules/mod_headers.so
-LoadModule setenvif_module modules/mod_setenvif.so
-LoadModule version_module modules/mod_version.so
-LoadModule unixd_module modules/mod_unixd.so
-LoadModule status_module modules/mod_status.so
-LoadModule autoindex_module modules/mod_autoindex.so
-LoadModule dir_module modules/mod_dir.so
-LoadModule alias_module modules/mod_alias.so
-LoadModule rewrite_module modules/mod_rewrite.so
-LoadModule proxy_module modules/mod_proxy.so
-LoadModule proxy_http_module modules/mod_proxy_http.so
+  LoadModule mpm_event_module modules/mod_mpm_event.so
+  LoadModule authn_file_module modules/mod_authn_file.so
+  LoadModule authn_core_module modules/mod_authn_core.so
+  LoadModule authz_host_module modules/mod_authz_host.so
+  LoadModule authz_groupfile_module modules/mod_authz_groupfile.so
+  LoadModule authz_user_module modules/mod_authz_user.so
+  LoadModule authz_core_module modules/mod_authz_core.so
+  LoadModule access_compat_module modules/mod_access_compat.so
+  LoadModule auth_basic_module modules/mod_auth_basic.so
+  LoadModule reqtimeout_module modules/mod_reqtimeout.so
+  LoadModule filter_module modules/mod_filter.so
+  LoadModule mime_module modules/mod_mime.so
+  LoadModule log_config_module modules/mod_log_config.so
+  LoadModule env_module modules/mod_env.so
+  LoadModule headers_module modules/mod_headers.so
+  LoadModule setenvif_module modules/mod_setenvif.so
+  LoadModule version_module modules/mod_version.so
+  LoadModule unixd_module modules/mod_unixd.so
+  LoadModule status_module modules/mod_status.so
+  LoadModule autoindex_module modules/mod_autoindex.so
+  LoadModule dir_module modules/mod_dir.so
+  LoadModule alias_module modules/mod_alias.so
+  LoadModule rewrite_module modules/mod_rewrite.so
+  LoadModule proxy_module modules/mod_proxy.so
+  LoadModule proxy_http_module modules/mod_proxy_http.so
 
-<IfModule unixd_module>
+  <IfModule unixd_module>
     User daemon
     Group daemon
-</IfModule>
+  </IfModule>
 
-ServerAdmin you@example.com
-ServerName localhost
+  ServerAdmin you@example.com
+  ServerName localhost
 
-<Directory />
+  <Directory />
     AllowOverride none
     Require all denied
-</Directory>
+  </Directory>
 
-DocumentRoot "/usr/local/apache2/htdocs"
-<Directory "/usr/local/apache2/htdocs">
+  DocumentRoot "/usr/local/apache2/htdocs"
+  <Directory "/usr/local/apache2/htdocs">
     Options Indexes FollowSymLinks
     AllowOverride All
     Require all granted
@@ -337,36 +337,79 @@ DocumentRoot "/usr/local/apache2/htdocs"
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule . /index.html [L]
-</Directory>
+  </Directory>
 
-<IfModule dir_module>
+  <IfModule dir_module>
     DirectoryIndex index.html
-</IfModule>
+  </IfModule>
 
-<Files ".ht*">
+  <Files ".ht*">
     Require all denied
-</Files>
+  </Files>
 
-# API 代理配置 - 将 /api 请求转发到后端
-ProxyPass /api http://php-apache:80
-ProxyPassReverse /api http://php-apache:80
+  # API 代理配置 - 将 /api 请求转发到后端
+  ProxyPass /api http://php-apache:80
+  ProxyPassReverse /api http://php-apache:80
 
-ErrorLog /proc/self/fd/2
-LogLevel warn
+  ErrorLog /proc/self/fd/2
+  LogLevel warn
 
-<IfModule log_config_module>
+  <IfModule log_config_module>
     LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
     LogFormat "%h %l %u %t \"%r\" %>s %b" common
     <IfModule logio_module>
-        LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" %I %O" combinedio
+      LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" %I %O" combinedio
     </IfModule>
     CustomLog /proc/self/fd/1 common
-</IfModule>
+  </IfModule>
 
-<IfModule mime_module>
+  <IfModule mime_module>
     TypesConfig conf/mime.types
     AddType application/x-compress .Z
     AddType application/x-gzip .gz .tgz
-</IfModule>
-```
+  </IfModule>
+  ```
 
+### 搭建步骤
+
+- 生成容器
+  ```
+  cd test
+  docker compose --profile dev up -d
+
+  ```
+
+- 安装 ThinkPHP8
+  ```
+  docker compose exec php-apache composer create-project topthink/think .
+
+  ```
+
+- 安装 Vue3 及插件 vue-router, pinia 和 axios
+  ```
+  docker compose exec vue-dev npm create vue@latest
+
+  docker compose exec vue-dev npm install vue-router@4
+  docker compose exec vue-dev npm install axios
+  docker compose exec vue-dev npm install pinia
+  ```
+
+### 配置 Vue 访问限制
+
+- 修改 vue 配置文件 vue/vite.config.ts
+  ```
+  ```
+
+### 配置 ThinkPHP 与 Vue 跨域通信
+
+- 新增 ThinkPHP 中间件 thinkphp/app/middleware/Cors.php
+  ```
+  ```
+
+- 注册 Cors.php 中间件 thinkphp/app/config/middleware.php
+  ```
+  ```
+  
+- 修改 vue 配置文件 vue/vite.config.ts
+  ```
+  ```
