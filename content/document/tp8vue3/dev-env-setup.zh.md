@@ -32,55 +32,55 @@ db ─┬─ mysql ─┬─ conf ── my-custom.cnf 数据库配置文件
 
 - Docker Compose 文件：docker-compose.yaml
 	```
-	services:
-		mysql:
-			image: mysql:8.0
-			container_name: mysql-server
-			environment:
-				MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD} 
-				MYSQL_DATABASE: ${MYSQL_DATABASE} 
-				MYSQL_USER: ${MYSQL_USER} 
-				MYSQL_PASSWORD: ${MYSQL_PASSWORD} 
-			volumes:
-				- mysql_data:/var/lib/mysql
-				- ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
-				- ./mysql/conf:/etc/mysql/conf.d
-			ports:
-				- "3306:3306"
-			networks:
-				- db_net
-			command: 
-				- --default-authentication-plugin=mysql_native_password
-				- --character-set-server=utf8mb4
-				- --collation-server=utf8mb4_unicode_ci
-			restart: unless-stopped
-			healthcheck:
-				test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
-				interval: 10s
-				timeout: 5s
-				retries: 5
-				start_period: 60s 
-		
-		adminer:
-			image: adminer:5.4.1
-			container_name: mysql-adminer
-			environment:
-				ADMINER_DEFAULT_SERVER: mysql
-				ADMINER_DEFAULT_DB: test
-			ports:
-				- "8080:8080"
-			depends_on:
-				mysql:
-					condition: service_healthy
-			networks:
-				- db_net
-				
-	volumes:
-		mysql_data:
+  services:
+    mysql:
+      image: mysql:8.0
+      container_name: mysql-server
+      environment:
+        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD} 
+        MYSQL_DATABASE: ${MYSQL_DATABASE} 
+        MYSQL_USER: ${MYSQL_USER} 
+        MYSQL_PASSWORD: ${MYSQL_PASSWORD} 
+      volumes:
+        - mysql_data:/var/lib/mysql
+        - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+        - ./mysql/conf:/etc/mysql/conf.d
+      ports:
+        - "3306:3306"
+      networks:
+        - db_net
+      command: 
+        - --default-authentication-plugin=mysql_native_password
+        - --character-set-server=utf8mb4
+        - --collation-server=utf8mb4_unicode_ci
+      restart: unless-stopped
+      healthcheck:
+        test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+        interval: 10s
+        timeout: 5s
+        retries: 5
+        start_period: 60s 
+    
+    adminer:
+      image: adminer:5.4.1
+      container_name: mysql-adminer
+      environment:
+        ADMINER_DEFAULT_SERVER: mysql
+        ADMINER_DEFAULT_DB: test
+      ports:
+        - "8080:8080"
+      depends_on:
+        mysql:
+          condition: service_healthy
+      networks:
+        - db_net
+        
+  volumes:
+    mysql_data:
 
-	networks:
-		db_net:
-			driver: bridge
+  networks:
+    db_net:
+      driver: bridge
 	```
 - 环境变量文件：.env
 	```
@@ -96,8 +96,8 @@ db ─┬─ mysql ─┬─ conf ── my-custom.cnf 数据库配置文件
 
 	USE `test`;
 
-	DROP TABLE IF EXISTS `user`;
-	CREATE TABLE `user` (
+  DROP TABLE IF EXISTS `user`;
+  CREATE TABLE `user` (
     `user_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'User ID',
     `user_name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Username',
     `email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Email',
@@ -112,7 +112,7 @@ db ─┬─ mysql ─┬─ conf ── my-custom.cnf 数据库配置文件
     PRIMARY KEY (`user_id`),
     UNIQUE KEY `user_name` (`user_name`),
     UNIQUE KEY `email` (`email`)
-	) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='User Table';
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='User Table';
 	```
 - 数据库配置文件：my-custom.cnf
 	```
