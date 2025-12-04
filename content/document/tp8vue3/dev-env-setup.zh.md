@@ -22,10 +22,10 @@ ThinkPHP 是一个免费开源的，快速、简单的面向对象的轻量级 P
 ### 作业目录
 
 ```
-db ─┬─ mysql ─┬─ conf ── my-custom.cnf 数据库配置文件
-    │         └─ init ── index.sql     数据库初始化文件 
-    ├─ .env  建立数据库的环境变量 
-    └─ docker-compose.yaml  用于生成容器的 Docker Compose 文件
+db ┬ mysql ┬ conf ─ my-custom.cnf  数据库配置文件
+   │       └ init ─ index.sql      数据库初始化文件 
+   ├ .env                          建立数据库的环境变量 
+   └ docker-compose.yaml           用于生成容器的 Docker Compose 文件
 ```
 
 ### 相关文件
@@ -139,4 +139,234 @@ docker compose up -d
 
 - 容器中安装了 MySQL 的管理工具 Adminer，开放了 8080 端口，可以通过 IP:8080 地址访问。
 - 同时可以通过 MySQL 客户端使用 MySQL 命令访问，开放了 3306 端口。
+
+## ThinkPHP 和 Vue 作业环境搭建
+
+### 作业目录
+
+```
+test ┬ backend ┬ php ┬ Dockerfile        重写 php:8.0-apache 镜像
+     │         │     └ 000-default.conf  php:8.0-apache 配置文件
+     │         └ thinkphp                后端目录 安装 ThinkPHP
+     ├ frontend ┬ apache - httpd.conf     apache 配置文件 
+     │          └ vue                    前端目录 安装 Vue
+     └ docker-compose.yaml               生成容器 docker compose 文件
+```
+
+### 相关文件
+
+- Docker Compose 文件：docker-compose.yaml
+```
+services:
+  # PHP + Apache 服务
+  php-apache:
+    build:
+      context: .   
+      dockerfile: ./backend/php/Dockerfile
+    image: php:8.0-apache-custom
+    container_name: php-apache-server
+    volumes:
+      - ./backend/thinkphp:/var/www/html
+    ports:
+      - "8000:80"
+    networks:
+      - app_net
+
+  # Vue 开发环境
+  vue-dev:
+    image: node:22.20
+    container_name: vue-dev-server
+    working_dir: /app
+    volumes:
+      - ./frontend/vue:/app
+    ports:
+      - "5173:5173"
+    command: sh -c "npm install && npm run dev"
+    networks:
+      - app_net
+    profiles: ["dev"]
+
+  # Vue 构建服务
+  vue-build:
+    image: node:22.20
+    container_name: vue-builder
+    working_dir: /app
+    volumes:
+      - ./frontend/vue:/app
+      - ./frontend/vue/dist:/app/dist
+    command: sh -c "npm install && npm run build"
+    networks:
+      - app_net
+    profiles: ["build"]
+
+  # Apache 用于 Vue 生产服务
+  vue-prod:
+    image: httpd:2.4
+    container_name: vue-prod-server
+    volumes:
+      - ./frontend/vue/dist:/usr/local/apache2/htdocs 
+      - ./frontend/apache/httpd.conf:/usr/local/apache2/conf/httpd.conf
+    ports:
+      - "80:80"
+    networks:
+      - app_net
+
+networks:
+  app_net:
+    driver: bridge
+```
+
+- 重写 php:8.0-apache 镜像文件：Dockerfile
+```
+FROM php:8.0-apache
+
+# 备份原有的源列表，并更换为阿里云镜像源
+RUN cp /etc/apt/sources.list /etc/apt/sources.list.bak && \
+    sed -i 's/deb.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list
+
+# 安装系统依赖
+RUN apt-get update && apt-get install -y \
+    curl \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    zip \
+    unzip \
+    libzip-dev \
+    default-mysql-client
+
+# 安装 PHP 扩展
+RUN docker-php-ext-install \
+    mysqli \
+    pdo_mysql \
+    mbstring \
+    exif \
+    pcntl \
+    bcmath \
+    gd \
+    zip \
+    sockets
+
+
+# 安装 Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# 启用 Apache mod_rewrite
+RUN a2enmod rewrite
+
+# 设置工作目录
+WORKDIR /var/www/html
+
+# 复制 Apache 配置
+COPY ./backend/php/000-default.conf /etc/apache2/sites-available/000-default.conf
+
+EXPOSE 80
+```
+
+- php:8.0-apache 配置文件
+```
+<VirtualHost *:80>
+    ServerAdmin webmaster@localhost
+    DocumentRoot /var/www/html/public
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+    <Directory /var/www/html/public>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+</VirtualHost>
+```
+
+- apache 配置文件 
+```
+ServerRoot "/usr/local/apache2"
+Listen 80
+
+LoadModule mpm_event_module modules/mod_mpm_event.so
+LoadModule authn_file_module modules/mod_authn_file.so
+LoadModule authn_core_module modules/mod_authn_core.so
+LoadModule authz_host_module modules/mod_authz_host.so
+LoadModule authz_groupfile_module modules/mod_authz_groupfile.so
+LoadModule authz_user_module modules/mod_authz_user.so
+LoadModule authz_core_module modules/mod_authz_core.so
+LoadModule access_compat_module modules/mod_access_compat.so
+LoadModule auth_basic_module modules/mod_auth_basic.so
+LoadModule reqtimeout_module modules/mod_reqtimeout.so
+LoadModule filter_module modules/mod_filter.so
+LoadModule mime_module modules/mod_mime.so
+LoadModule log_config_module modules/mod_log_config.so
+LoadModule env_module modules/mod_env.so
+LoadModule headers_module modules/mod_headers.so
+LoadModule setenvif_module modules/mod_setenvif.so
+LoadModule version_module modules/mod_version.so
+LoadModule unixd_module modules/mod_unixd.so
+LoadModule status_module modules/mod_status.so
+LoadModule autoindex_module modules/mod_autoindex.so
+LoadModule dir_module modules/mod_dir.so
+LoadModule alias_module modules/mod_alias.so
+LoadModule rewrite_module modules/mod_rewrite.so
+LoadModule proxy_module modules/mod_proxy.so
+LoadModule proxy_http_module modules/mod_proxy_http.so
+
+<IfModule unixd_module>
+    User daemon
+    Group daemon
+</IfModule>
+
+ServerAdmin you@example.com
+ServerName localhost
+
+<Directory />
+    AllowOverride none
+    Require all denied
+</Directory>
+
+DocumentRoot "/usr/local/apache2/htdocs"
+<Directory "/usr/local/apache2/htdocs">
+    Options Indexes FollowSymLinks
+    AllowOverride All
+    Require all granted
+    
+    # Vue Router history 模式支持
+    RewriteEngine On
+    RewriteBase /
+    RewriteRule ^index\.html$ - [L]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule . /index.html [L]
+</Directory>
+
+<IfModule dir_module>
+    DirectoryIndex index.html
+</IfModule>
+
+<Files ".ht*">
+    Require all denied
+</Files>
+
+# API 代理配置 - 将 /api 请求转发到后端
+ProxyPass /api http://php-apache:80
+ProxyPassReverse /api http://php-apache:80
+
+ErrorLog /proc/self/fd/2
+LogLevel warn
+
+<IfModule log_config_module>
+    LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
+    LogFormat "%h %l %u %t \"%r\" %>s %b" common
+    <IfModule logio_module>
+        LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" %I %O" combinedio
+    </IfModule>
+    CustomLog /proc/self/fd/1 common
+</IfModule>
+
+<IfModule mime_module>
+    TypesConfig conf/mime.types
+    AddType application/x-compress .Z
+    AddType application/x-gzip .gz .tgz
+</IfModule>
+```
 
