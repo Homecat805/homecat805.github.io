@@ -181,7 +181,9 @@ test ┬ backend ┬ php ┬ Dockerfile        重写 php:8.0-apache 镜像
         - ./frontend/vue:/app
       ports:
         - "5173:5173"
-      command: sh -c "npm install && npm run dev"
+      command: tail -f /dev/null
+      # command: sh -c "npm install && npm run dev"
+
       networks:
         - app_net
       profiles: ["dev"]
@@ -369,7 +371,7 @@ test ┬ backend ┬ php ┬ Dockerfile        重写 php:8.0-apache 镜像
     AddType application/x-gzip .gz .tgz
   </IfModule>
   ```
-
+fb7bed3c0776
 ### 搭建步骤
 
 - 生成 php-apache 容器并安装 ThinkPHP8
@@ -400,30 +402,148 @@ test ┬ backend ┬ php ┬ Dockerfile        重写 php:8.0-apache 镜像
 
 - 生成 vue-dev 容器并安装 Vue3 及插件 vue-router, pinia 和 axios
   ```
-  ~/test$ docker compose --profile dev up vue-dev 
-  docker compose exec vue-dev npm create vue@latest
+  ~/test$ docker compose --profile dev up  vue-dev -d
+  ~/test$ docker compose exec vue-dev npm create vue@latest
 
-  docker compose exec vue-dev npm install vue-router@4
-  docker compose exec vue-dev npm install axios
-  docker compose exec vue-dev npm install pinia
+  > npx
+  > create-vue .
+
+  ┌  Vue.js - The Progressive JavaScript Framework
+  │
+  ◇  Current directory is not empty. Remove existing files and continue
+  │  Yes
+  │
+  ◇  Package name:
+  │  app
+  │
+  ◇  Select features to include in your project: (↑/↓ to navigate, space to select, a to toggle all, enter to confirm)
+  │  TypeScript
+  │
+  ◇  Select experimental features to include in your project: (↑/↓ to navigate, space to select, a to toggle all, enter to confirm)
+  │  none
+  │
+  ◇  Skip all example code and start with a blank Vue project?
+  │  Yes
+
+  Scaffolding project in /app...
+  │
+  └  Done. Now run:
+    npm install
+    npm run dev
+  | Optional: Initialize Git in your project directory with:
+    git init && git add -A && git commit -m "initial commit"
+
+
+  ~/test$ docker compose exec vue-dev npm install vue-router@4
+
+  added 154 packages, and audited 155 packages in 1m
+  ...
+
+  ~/test$ docker compose exec vue-dev npm install axios
+
+  added 24 packages, and audited 179 packages in 7s
+  ...
+
+  ~/test$ docker compose exec vue-dev npm install pinia
+  added 5 packages, and audited 184 packages in 2s
+  ...
+
+    ~/test$ sudo chown -R 用户uid:用户gid frontend/vue
   ```
 
 ### 配置 Vue 访问限制
 
 - 修改 vue 配置文件 vue/vite.config.ts
   ```
+  export default defineConfig({
+  ...
+    server: {
+      host: '0.0.0.0',  // 允许所有IP访问
+      port: 5173
+    },
+    ...
+  })
   ```
 
 ### 配置 ThinkPHP 与 Vue 跨域通信
 
 - 新增 ThinkPHP 中间件 thinkphp/app/middleware/Cors.php
   ```
+  <?php
+  namespace app\middleware;
+  class Cors
+  {
+      public function handle($request, \Closure $next)
+      {
+          header('Access-Control-Allow-Origin: *');
+          header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+          header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
+          header('Access-Control-Allow-Credentials: true');
+          if ($request->method() == 'OPTIONS') {
+              return response();
+          }
+          return $next($request);
+      }
+  }
   ```
 
-- 注册 Cors.php 中间件 thinkphp/app/config/middleware.php
+- 注册 Cors.php 中间件 thinkphp/app/middleware.php
   ```
+  <?php
+  // 全局中间件定义文件
+  return [
+    ...
+    \app\middleware\Cors::class,
+    ...
+  ];
+
   ```
   
 - 修改 vue 配置文件 vue/vite.config.ts
   ```
+  export default defineConfig({
+    ...
+    server: {
+      host: '0.0.0.0',
+      port: 5173,
+      proxy: {
+        '/api': {
+          target: 'http://php-apache:80',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, '')
+        }
+      }
+    },
+    ...
+  })
   ```
+
+  ## 启动容器
+
+  ### 修改 docker-compose.yaml 文件
+  将
+  ```
+  services:
+    ...
+    vue-dev:
+      ...
+      command: tail -f /dev/null
+      # command: sh -c "npm install && npm run dev"
+      ...
+    ...
+  ```
+  修改为：
+  ```
+  services:
+    ...
+    vue-dev:
+      ...
+      # command: tail -f /dev/null
+      command: sh -c "npm install && npm run dev"
+      ...
+    ...
+  ```
+
+  ### 启动开发环境
+
+
