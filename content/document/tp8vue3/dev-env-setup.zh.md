@@ -100,23 +100,23 @@ db ─┬─ mysql ─┬─ conf ── my-custom.cnf 数据库配置文件
 
   DROP TABLE IF EXISTS `user`;
   CREATE TABLE `user` (
-    `user_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'User ID',
-    `user_name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Username',
-    `email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Email',
-    `password` varchar(255) NOT NULL COMMENT 'Password',
-    `token` varchar(100) DEFAULT '' COMMENT 'Session Identifier',
-    `user_status` tinyint(1) DEFAULT '0' COMMENT 'User Status',
-    `user_type` tinyint(1) DEFAULT '0' COMMENT 'User Type',
-    `last_login` datetime DEFAULT NULL COMMENT 'Last Login Time',
-    `created_at` datetime DEFAULT NULL COMMENT 'Account Create Time',
-    `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Account Update Time',
-    `deleted_at` datetime DEFAULT NULL COMMENT 'Account Delete Time',
-    PRIMARY KEY (`user_id`),
-    UNIQUE KEY `user_name` (`user_name`),
-    UNIQUE KEY `email` (`email`)
+      `user_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'User ID',
+      `user_name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Username',
+      `email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Email',
+      `password` varchar(255) NOT NULL COMMENT 'Password',
+      `token` varchar(100) DEFAULT '' COMMENT 'Session Identifier',
+      `user_status` tinyint(1) DEFAULT '0' COMMENT 'User Status',
+      `user_type` tinyint(1) DEFAULT '0' COMMENT 'User Type',
+      `last_login` datetime DEFAULT NULL COMMENT 'Last Login Time',
+      `created_at` datetime DEFAULT NULL COMMENT 'Account Create Time',
+      `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Account Update Time',
+      `deleted_at` datetime DEFAULT NULL COMMENT 'Account Delete Time',
+      PRIMARY KEY (`user_id`),
+      UNIQUE KEY `user_name` (`user_name`),
+      UNIQUE KEY `email` (`email`)
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='User Table';
 	```
-  
+
 - 数据库配置文件：my-custom.cnf
 	```
 	[mysqld]
