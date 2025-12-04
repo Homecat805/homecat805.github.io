@@ -109,8 +109,8 @@ db ─┬─ mysql ─┬─ conf ── my-custom.cnf 数据库配置文件
 		`created_at` datetime DEFAULT NULL COMMENT 'Account Create Time',
 		`updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Account Update Time',
 		`deleted_at` datetime DEFAULT NULL COMMENT 'Account Delete Time',
-		PRIMARY KEY (`id`),
-		UNIQUE KEY `username` (`username`),
+		PRIMARY KEY (`user_id`),
+		UNIQUE KEY `user_name` (`user_name`),
 		UNIQUE KEY `email` (`email`)
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='User Table';
 	```
