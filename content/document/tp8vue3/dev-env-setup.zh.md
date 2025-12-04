@@ -372,21 +372,35 @@ test ┬ backend ┬ php ┬ Dockerfile        重写 php:8.0-apache 镜像
 
 ### 搭建步骤
 
-- 生成容器
+- 生成 php-apache 容器并安装 ThinkPHP8
   ```
-  cd test
-  docker compose --profile dev up -d
+  ~$ cd test
+  ~/test$ docker compose up php-apache -d
 
+  [+] Running 1/1
+  ✔ Container php-apache-server  Started        0.8s 
+
+  ~/test$ docker compose exec php-apache composer create-project topthink/think .
+
+  Creating a "topthink/think" project at "./"
+  Installing topthink/think (v8.1.3)
+  ...
+  14 package suggestions were added by new dependencies, use composer suggest to see details.
+  Generating autoload files
+  @php think service:discover
+  Succeed!
+  @php think vendor:publish
+  File /var/www/html/config/trace.php exist!
+  Succeed!
+  ...
+  
+  ~/test$ sudo chown -R 用户uid:用户gid backend/thinkphp
+  ~/test$ sudo chmod 777 backend/thinkphp/runtime
   ```
 
-- 安装 ThinkPHP8
+- 生成 vue-dev 容器并安装 Vue3 及插件 vue-router, pinia 和 axios
   ```
-  docker compose exec php-apache composer create-project topthink/think .
-
-  ```
-
-- 安装 Vue3 及插件 vue-router, pinia 和 axios
-  ```
+  ~/test$ docker compose --profile dev up vue-dev 
   docker compose exec vue-dev npm create vue@latest
 
   docker compose exec vue-dev npm install vue-router@4
