@@ -98,7 +98,7 @@ db ─┬─ mysql ─┬─ conf ── my-custom.cnf 数据库配置文件
 
   DROP TABLE IF EXISTS `user`;
   CREATE TABLE `user` (
-      `user_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'User ID',
+    `user_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'User ID',
       `user_name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Username',
       `email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Email',
       `password` varchar(255) NOT NULL COMMENT 'Password',
