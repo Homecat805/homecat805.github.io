@@ -26,17 +26,17 @@ db ┬ mysql ┬ conf ─ my-custom.cnf  数据库配置文件
 docker-compose.yaml
 ```
 services:
-  mysql:
+  db-mysql:
     image: mysql:8.0
     container_name: mysql-server
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD} 
-      MYSQL_DATABASE: ${MYSQL_DATABASE} 
-      MYSQL_USER: ${MYSQL_USER} 
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD} 
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD} 
+      MYSQL_DATABASE: ${DB_DATABASE} 
+      MYSQL_USER: ${DB_USER} 
+      MYSQL_PASSWORD: ${DB_PASSWORD} 
     volumes:
       - mysql_data:/var/lib/mysql
-      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./mysql/init/index.sql:/docker-entrypoint-initdb.d/init.sql
       - ./mysql/conf:/etc/mysql/conf.d
     ports:
       - "3306:3306"
@@ -48,7 +48,7 @@ services:
       - --collation-server=utf8mb4_unicode_ci
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_ROOT_PASSWORD}"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -58,12 +58,12 @@ services:
     image: adminer:5.4.1
     container_name: mysql-adminer
     environment:
-      ADMINER_DEFAULT_SERVER: mysql
-      ADMINER_DEFAULT_DB: test
+      ADMINER_DEFAULT_SERVER: db-mysql
+      ADMINER_DEFAULT_DB: ${DB_DATABASE} 
     ports:
-      - "8080:8080"
+      - "80:8080"
     depends_on:
-      mysql:
+      db-mysql:
         condition: service_healthy
     networks:
       - db_net
@@ -80,37 +80,37 @@ networks:
 
 .env
 ```
-MYSQL_ROOT_PASSWORD = 数据库 root 密码
-MYSQL_DATABASE = 数据库名
-MYSQL_USER = 用户名
-MYSQL_PASSWORD = 用户密码
+DB_ROOT_PASSWORD = 数据库 root 密码
+DB_DATABASE = 数据库名
+DB_USER = 用户名
+DB_PASSWORD = 用户密码
 ```
 
 ### 数据库初始化文件：
 
 mysql/init/index.sql
 ```
-CREATE DATABASE IF NOT EXISTS `test` 
+CREATE DATABASE IF NOT EXISTS `testdb` 
 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-USE `test`;
+USE `testdb`;
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
-    `user_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'User ID',
-    `user_name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Username',
-    `email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Email',
-    `password` varchar(255) NOT NULL COMMENT 'Password',
-    `token` varchar(100) DEFAULT '' COMMENT 'Session Identifier',
-    `user_status` tinyint(1) DEFAULT '0' COMMENT 'User Status',
-    `user_type` tinyint(1) DEFAULT '0' COMMENT 'User Type',
-    `last_login` datetime DEFAULT NULL COMMENT 'Last Login Time',
-    `created_at` datetime DEFAULT NULL COMMENT 'Account Create Time',
-    `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Account Update Time',
-    `deleted_at` datetime DEFAULT NULL COMMENT 'Account Delete Time',
-    PRIMARY KEY (`user_id`),
-    UNIQUE KEY `user_name` (`user_name`),
-    UNIQUE KEY `email` (`email`)
+  `user_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'User ID',
+  `user_name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Username',
+  `email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Email',
+  `password` varchar(255) NOT NULL COMMENT 'Password',
+  `token` varchar(100) DEFAULT '' COMMENT 'Session Identifier',
+  `user_status` tinyint(1) DEFAULT '0' COMMENT 'User Status',
+  `user_type` tinyint(1) DEFAULT '0' COMMENT 'User Type',
+  `last_login` datetime DEFAULT NULL COMMENT 'Last Login Time',
+  `created_at` datetime DEFAULT NULL COMMENT 'Account Create Time',
+  `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Account Update Time',
+  `deleted_at` datetime DEFAULT NULL COMMENT 'Account Delete Time',
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `user_name` (`user_name`),
+  UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='User Table';
 ```
 
