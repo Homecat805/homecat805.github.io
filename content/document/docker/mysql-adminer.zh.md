@@ -86,7 +86,7 @@ DB_USER = 用户名
 DB_PASSWORD = 用户密码
 ```
 
-### 数据库初始化文件：
+### 数据库初始化文件
 
 mysql/init/index.sql
 ```
