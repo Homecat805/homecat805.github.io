@@ -22,7 +22,8 @@ db ┬ mysql ┬ conf ─ my-custom.cnf  数据库配置文件
 
 ## 相关文件
 
-### Docker Compose 文件：docker-compose.yaml
+### Docker Compose 文件
+docker-compose.yaml
 ```
 services:
   mysql:
@@ -75,7 +76,9 @@ networks:
     driver: bridge
 ```
 
-### 环境变量文件：.env
+### 环境变量文件
+
+.env
 ```
 MYSQL_ROOT_PASSWORD = 数据库 root 密码
 MYSQL_DATABASE = 数据库名
@@ -83,7 +86,9 @@ MYSQL_USER = 用户名
 MYSQL_PASSWORD = 用户密码
 ```
 
-### 数据库初始化文件：index.sql
+### 数据库初始化文件：
+
+mysql/init/index.sql
 ```
 CREATE DATABASE IF NOT EXISTS `test` 
 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -109,7 +114,9 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='User Table';
 ```
 
-### 数据库配置文件：my-custom.cnf
+### 数据库配置文件
+
+mysql/cond/my-custom.cnf
 ```
 [mysqld]
 bind-address = 0.0.0.0  //不限制访问地址 
