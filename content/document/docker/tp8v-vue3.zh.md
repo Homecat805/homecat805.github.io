@@ -314,7 +314,7 @@ tp8-server  | AH00112: Warning: DocumentRoot [/var/www/html/public] does not exi
 
 w Enable Watch   d Detach
 ```
-按 <kbd>d</kdb> 选择 Detach 
+选择 Detach 按 <kbd>d</kdb>  
 
 - 查看容器
 ```
