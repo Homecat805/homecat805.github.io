@@ -301,6 +301,7 @@ networks:
 
 ### 启动容器
 ```
+cd project
 docker compose --profile dev up
 
 [+] up 4/4
@@ -328,6 +329,7 @@ vue-prod-server   httpd:2.4               "httpd-foreground"       vue3-prod   3
 
 - 安装 ThinkPHP
 ```
+cd project
 docker compose exec tp8 bash
 root@a0f20d842dd2:/var/www/html# composer create-project topthink/think . 
 
@@ -353,6 +355,7 @@ root@a0f20d842dd2:/var/www/html# exit
 
 - 安装 Vue
 ```
+cd project
 docker compose exec vue3-dev bash
 root@25773b67f169:/app# pnpm create vue@latest .
 
@@ -449,7 +452,7 @@ tp8-server  | AH00112: Warning: DocumentRoot [/var/www/html/public] does not exi
 
 w Enable Watch   d Detach
 ```
-按<kbd>d</kdb>选择 Detach 。 
+选择 Detach 按 <kbd>d</kdb>
 
 ### 查看容器
 
