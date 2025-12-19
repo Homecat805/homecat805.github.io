@@ -173,7 +173,7 @@ hugo v0.150.0-3f5473b7d4e7377e807290c3acc89feeef1aaa71+extended linux/amd64 Buil
  Pages            │ 18 
  Paginator pages  │  0 
  Non-page files   │  1 
- Static files     │  1 
+ Static files     │  1 /
  Processed images │  0 
  Aliases          │  0 
  Cleaned          │  0 
