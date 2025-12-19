@@ -203,7 +203,7 @@ RUN a2enmod rewrite
 WORKDIR /var/www/html
 
 # 复制 Apache 配置
-COPY ./backend/php/000-default.conf /etc/apache2/sites-available/000-default.conf
+COPY ./docker/php/000-default.conf /etc/apache2/sites-available/000-default.conf
 
 EXPOSE 80
 ```
@@ -319,6 +319,7 @@ w Enable Watch   d Detach
 
 - 查看容器
 ```
+cd project
 docker compose ps
 
 NAME              IMAGE                   COMMAND                  SERVICE     CREATED         STATUS         PORTS
