@@ -211,7 +211,7 @@ docker compose down -v
 
 ## 其它
 
-- 搭建所需文件地址 [gitee.com](https://gitee.com:homecat805/hugo)
+- 搭建所需文件地址 [Gitee](https://gitee.com/homecat805/hugo)
 - 获取文件
 
   ```
