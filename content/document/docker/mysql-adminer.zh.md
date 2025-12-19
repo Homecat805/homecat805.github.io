@@ -25,7 +25,9 @@ project
 
 ## 相关文件
 
-### docker-compose.yaml
+### Docker Compose 文件
+
+docker-compose.yaml
 ```
 services:
   db-server:
@@ -82,8 +84,9 @@ networks:
     driver: bridge
 ```
 
-### 环境变量 .env
+### 环境变量 
 
+.env
 ```
 DB_ROOT_PASSWORD = 数据库 root 密码
 DB_DATABASE = 数据库名
@@ -91,7 +94,9 @@ DB_USER = 用户名
 DB_PASSWORD = 用户密码
 ```
 
-### 数据库配置文件 mysql/cond/my-custom.cnf
+### 数据库配置文件 
+
+mysql/cond/my-custom.cnf
 ```
 [mysqld]
 bind-address = 0.0.0.0  //不限制访问地址 
