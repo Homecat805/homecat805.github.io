@@ -468,6 +468,7 @@ vue-prod-server   httpd:2.4               "httpd-foreground"       vue3-prod   3
 ### 安装 ThinkPHP
 
 ```
+cd project
 docker compose exec tp8 bash
 root@a0f20d842dd2:/var/www/html# composer create-project topthink/think . 
 
@@ -493,6 +494,7 @@ root@a0f20d842dd2:/var/www/html# exit
 
 ### 安装 Vue
 ```
+cd project
 docker compose exec vue3-dev bash
 root@25773b67f169:/app# pnpm create vue@latest .
 
@@ -580,6 +582,7 @@ root@25773b67f169:/app# exit
 ### 退出容器
 
 ```
+cd project
 docker compose --profile dev down
 ```
 
@@ -661,6 +664,7 @@ services:
 
 ### 命令
 ```
+cd project
 docker compose --profile dev up    进入开发环境
 docker compose --profile dev down  退出开发环境
 docker compose --profile build up  生产环境重构
