@@ -107,8 +107,8 @@ DocumentRoot "/usr/local/apache2/htdocs"
 </Files>
 
 # API 代理配置 - 将 /api 请求转发到后端
-ProxyPass /api http://php-apache:80
-ProxyPassReverse /api http://php-apache:80
+ProxyPass /api http://tp8:80
+ProxyPassReverse /api http://tp8:80
 
 ErrorLog /proc/self/fd/2
 LogLevel warn
