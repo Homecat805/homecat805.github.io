@@ -31,6 +31,7 @@ project
 
   ```
   mkdir project/docker
+  mkdir porject/myblog
   cd project/docker
   wget "https://github.com/gohugoio/hugo/releases/download/v0.150.0/hugo_extended_0.150.0_linux-arm64.deb"
   wget "https://github.com/sass/dart-sass/releases/download/1.90.0/dart-sass-1.90.0-linux-x64.tar.gz"
