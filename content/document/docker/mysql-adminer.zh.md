@@ -15,17 +15,16 @@ weight = 1
 
 ```
 project
-  ├─ mysql 
-  │   ├─ conf
-  │   │   └─ my-custom.cnf  配置文件
-  │   └─ data               数据文件目录
-  ├─ .env                   环境变量 
+  ├─ conf 
+  │   └─ my-custom.cnf      配置文件
+  ├─ data                数据文件目录
+  ├─ .env                环境变量文件 
   └─ docker-compose.yaml    容器文件
 ```
 
 ## 相关文件
 
-### Docker Compose 文件
+### 容器文件
 
 docker-compose.yaml
 ```
@@ -39,8 +38,8 @@ services:
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - ./mysql/data:/var/lib/mysql
-      - ./mysql/conf:/etc/mysql/conf.d
+      - ./data:/var/lib/mysql
+      - ./conf:/etc/mysql/conf.d
     ports:
       - "3306:3306"
     networks:
@@ -84,7 +83,7 @@ networks:
     driver: bridge
 ```
 
-### 环境变量 
+### 环境变量文件
 
 .env
 ```
