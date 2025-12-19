@@ -7,135 +7,213 @@ weight = 3
     author = 'Homecat'
 +++
 
-利用 Docker 技术搭建 Hugo 静态网站生成器的作业环境。
+为了实现 Hugo 静态网站的本地调试，又不在宿主机上安装 Hugo 应用以保持宿主机整洁，用 Docker 搭建 Hugo 的作业环境，整个搭建过程在 Ubuntu 22.04 上完成。
 
 <!--more-->
 
-## 镜像制作
+## 搭建
 
-### 准备工作
-
-生成工作目录，下载安装文件： Hugo v0.150.0 和 Dart-sass v1.90.0 
+### 作业目录
 
 ```
-mkdir hugo-dartsass
-cd hugo-dartsass
-wget "https://github.com/gohugoio/hugo/releases/download/v0.150.0/hugo_extended_0.150.0_linux-arm64.deb"
-wget "https://github.com/sass/dart-sass/releases/download/1.90.0/dart-sass-1.90.0-linux-x64.tar.gz"
-nano Dockerfile
+project 
+  ├─ docker
+  │   ├─ hugo_extended_0.150.0_linux-arm64.deb  
+  │   ├─ dart-sass-1.90.0-linux-x64.tar.gz 
+  │   └─ Dockerfile
+  ├─ myblog     
+  └─ docker-compose.yaml 
 ```
 
-### Dockerfile
+### 镜像文件准备
 
-```
-FROM ubuntu:22.04
-
-# 将本地 deb 文件复制到容器中
-COPY hugo_extended_0.150.0_linux-amd64.deb /tmp/hugo.deb
-COPY dart-sass-1.93.0-linux-x64.tar.gz /tmp/dart-sass.tar.gz
-
-# 安装必要的依赖和 Hugo
-RUN apt-get install -y --no-install-recommends \
-    ca-certificates \
-    /tmp/hugo.deb \
-    && rm -rf /var/lib/apt/lists/* \
-    && rm /tmp/hugo.deb
-
-# 使用官方推荐的方式安装 dart-sass
-RUN tar -xzf /tmp/dart-sass.tar.gz -C /tmp && \
-    mv /tmp/dart-sass /opt/dart-sass && \
-    ln -s /opt/dart-sass/sass /usr/local/bin/sass && \
-    rm /tmp/dart-sass.tar.gz
-
-# 将 dart-sass 添加到 PATH
-ENV PATH="/opt/dart-sass:${PATH}"
-
-# 创建与主机匹配的组和用户
-# 使用固定的 GID 和 UID 以确保与主机匹配
-RUN groupadd -g 1000 zhong && \
-    useradd -u 1000 -g zhong -m -s /bin/bash zhong
-
-# 设置工作目录
-WORKDIR /src
-
-# 切换到 zhong 用户
-USER zhong
-
-# 设置容器默认命令
-CMD ["hugo", "version"]
-```
-
-### 生成镜像
-
-```
-docker build -t hugo:0.150.0 .
-```
-
-## 镜像使用
-
-### 方式一：docker run
-
-- 生成容器
+- 生成工作目录，下载安装文件： Hugo v0.150.0 和 Dart-sass v1.90.0 
 
   ```
-  docker run -it --rm \
-      --name myblog \
-      -p 1313:1313 \
-      -v /home/zhong/www/sites/myblog:/src \
-      -v /etc/passwd:/etc/passwd:ro \
-      -v /etc/group:/etc/group:ro \
-      --user $(id -u zhong):$(id -g zhong) \
-      hugo:0.150.0 \
-      /bin/bash
+  mkdir project/docker
+  cd project/docker
+  wget "https://github.com/gohugoio/hugo/releases/download/v0.150.0/hugo_extended_0.150.0_linux-arm64.deb"
+  wget "https://github.com/sass/dart-sass/releases/download/1.90.0/dart-sass-1.90.0-linux-x64.tar.gz"
   ```
 
-### 方式二：docker compose
+- 编写 Dockerfile
 
-- docker-compose.yaml
+  ```
+  FROM ubuntu:22.04
+
+  # 安装基础工具
+  RUN apt-get update && apt-get install -y ca-certificates
+
+  # 获取安装文件
+  COPY ./docker/hugo_extended_0.150.0_linux-amd64.deb /tmp/hugo.deb
+  COPY ./docker/dart-sass-1.93.0-linux-x64.tar.gz /tmp/dart-sass.tar.gz
+
+  # 安装 Hugo 和 Dart Sass
+  RUN apt-get install -y /tmp/hugo.deb && \
+      tar -xzf /tmp/dart-sass.tar.gz -C /usr/local/ && \
+      ln -s /usr/local/dart-sass/sass /usr/local/bin/sass && \
+      rm -rf /var/lib/apt/lists/* /var/tmp/* /tmp/*
+
+  # 设置工作目录
+  WORKDIR /app
+
+  # 设置容器默认命令
+  CMD ["hugo", "version"]
+  ```
+
+### 容器文件准备
+
+- 编写 docker-compose.yaml 文件
 
   ```
   services:
-    myblog:
-      image: hugo:0.150.0
-      container_name: myblog
-      user: "${CURRENT_UID}:${CURRENT_GID}"
+    hugo:
+      build:
+        context: .   
+        dockerfile: ./docker/Dockerfile
+      image: hugo:0.150.0-custom
+      container_name: myhugo
       ports:
         - "1313:1313"
       volumes:
-        - /home/zhong/www/sites/myblog:/src
-        - /etc/passwd:/etc/passwd:ro
-        - /etc/group:/etc/group:ro
+        - ./myblog:/src
       working_dir: /src
       entrypoint: /bin/bash
       tty: true
       stdin_open: true
   ```
 
-- 生成容器  
+### 生成容器  
+
+```
+cd project
+docker compose up -d
+
+ ✔ Image hugo:0.150.0-custom Built       76.1s 
+ ✔ Network hugo_default      Created      0.3s 
+ ✔ Container myhugo          Created      1.2s 
+```
+
+## 使用
+
+### 查看容器信息
+
+```
+docker compose ps
+
+NAME    IMAGE                COMMAND      SERVICE   CREATED         STATUS        PORTS                                  1.1s 
+myhugo  hugo:0.150.0-custom  "/bin/bash"  hugo      6 seconds ago   Up 4 seconds  0.0.0.0:1313->1313/tcp, [::]:1313->1313/tcp
+
+```
+
+### 进入容器
+
+```
+cd project
+docker compose exec hugo bash
+
+root@bb5d6d4a2839:/src# 
+```
+
+### 生成新站点
+```
+root@bb5d6d4a2839:/src# hugo new site . 
+
+Congratulations! Your new Hugo site was created in /src.
+Just a few more steps...
+1. Change the current directory to /src.
+2. Create or install a theme:
+   - Create a new theme with the command "hugo new theme <THEMENAME>"
+   - Or, install a theme from https://themes.gohugo.io/
+3. Edit hugo.toml, setting the "theme" property to the theme name.
+4. Create new content with the command "hugo new content <SECTIONNAME>/<FILENAME>.<FORMAT>".
+5. Start the embedded web server with the command "hugo server --buildDrafts".
+See documentation at https://gohugo.io/.
+
+root@bb5d6d4a2839:/src# hugo new theme mytheme
+Creating new theme in /src/myblog/themes/mytheme
+root@bb5d6d4a2839:/src# exit 
+```
+
+### 调整网站文件
+
+- 修改文件拥有人
 
   ```
-  # 设置环境变量
-  export CURRENT_UID=$(id -u zhong)
-  export CURRENT_GID=$(id -g zhong)
-
-  # 启动服务
-  docker compose up
-  ```
-- 进入容器
-
-  生成容器后，如要进入容器，另开一个 shell 窗口。
-
-  ```
-  # 设置环境变量
-  export CURRENT_UID=$(id -u zhong)
-  export CURRENT_GID=$(id -g zhong)
-
-  # 启动服务
-  docker compose exec myblog /bin/bash
+  cd project
+  sudo chown -R $(id -u):$(id -g) myblog
   ```
 
-- 关闭容器
+
+- 修改 project/myblog/hugo.toml 文件
 
   ```
-  docker compose down
+  baseURL = 'https://example.org/'
+  languageCode = 'en-us'
+  title = 'My New Hugo Site'
+  ...
+  theme = 'mytheme'
+  ...
   ```
+
+### 启动 Hugo 服务
+
+```
+docker compose exec hugo bash
+root@bb5d6d4a2839:/src# hugo server --bind 0.0.0.0
+
+Watching for changes in /src/myblog/{archetypes,assets,content,data,i18n,layouts,static,themes}
+Watching for config changes in /src/myblog/hugo.toml, /src/myblog/themes/mytheme/hugo.toml
+Start building sites … 
+hugo v0.150.0-3f5473b7d4e7377e807290c3acc89feeef1aaa71+extended linux/amd64 BuildDate=2025-09-08T13:01:12Z VendorInfo=gohugoio
+
+                  │ EN 
+──────────────────┼────
+ Pages            │ 18 
+ Paginator pages  │  0 
+ Non-page files   │  1 
+ Static files     │  1 
+ Processed images │  0 
+ Aliases          │  0 
+ Cleaned          │  0 
+
+Built in 15 ms
+Environment: "development"
+Serving pages from disk
+Running in Fast Render Mode. For full rebuilds on change: hugo server --disableFastRender
+Web Server is available at http://localhost:1313/ (bind address 0.0.0.0) 
+Press Ctrl+C to stop
+```
+
+### 访问站点
+
+打开浏览器，访问：http://localhost:1313/
+
+### 停止 Hugo 服务
+
+容器内， <kbd>Ctrl</kbd>+<kbd>C</kbd>。
+
+```
+root@bb5d6d4a2839:/src# exit
+```
+
+### 关闭容器
+
+```
+cd project
+docker compose down -v
+
+[+] down 1/2
+ ✔ Container myhugo     Removed     11.0s 
+ ✔ Network hugo_default Removed     9.0s      
+```
+
+## 其它
+
+- 搭建所需文件地址 [gitee.com](https://gitee.com:homecat805/hugo)
+- 获取文件
+
+  ```
+  git clone git@gitee.com:homecat805/hugo.git
+  ```
+
