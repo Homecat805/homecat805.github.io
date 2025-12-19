@@ -194,6 +194,8 @@ Press Ctrl+C to stop
 
 容器内， <kbd>Ctrl</kbd>+<kbd>C</kbd>。
 
+### 退出容器
+
 ```
 root@bb5d6d4a2839:/src# exit
 ```
