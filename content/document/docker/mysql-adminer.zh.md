@@ -1,7 +1,7 @@
 +++
 date = '2025-12-05T10:04:25+08:00'
 draft = false
-title = 'Docker - Mysql 和 Adminer 作业环境搭建'
+title = 'Mysql 和 Adminer 作业环境搭建'
 weight = 1
 [params]
     author = 'Homecat'

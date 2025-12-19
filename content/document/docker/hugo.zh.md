@@ -1,7 +1,7 @@
 +++
 date = '2025-09-23T07:46:29Z'
 draft = false
-title = 'Docker - Hugo 作业环境搭建'
+title = 'Hugo 作业环境搭建'
 weight = 3
 [params]
     author = 'Homecat'
