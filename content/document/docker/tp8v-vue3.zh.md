@@ -343,8 +343,6 @@ Succeed!
 File /var/www/html/config/trace.php exist!
 Succeed!
 
-...
-
 root@a0f20d842dd2:/var/www/html# exit
 ```
 
@@ -355,7 +353,6 @@ docker compose exec vue3-dev bash
 root@25773b67f169:/app# pnpm create vue@latest .
 
 ...
-
 ┌  Vue.js - The Progressive JavaScript Framework
 ◇  Current directory is not empty. Remove existing files and continue
 │  Yes
@@ -372,13 +369,11 @@ Scaffolding project in /app...
 
   pnpm install
   pnpm dev
-
 ...
 
 root@25773b67f169:/app# pnpm install
 
 ...
-
 dependencies:
 + vue 3.5.26
 
@@ -400,37 +395,21 @@ devDependencies:
 │                                                                                            │
 ╰────────────────────────────────────────────────────────────────────────────────────────────╯
 Done in 48.9s using pnpm v10.26.0
-
 ...
 
 root@25773b67f169:/app# pnpm approve-builds
 
 ...
-
 ✔ Choose which packages to build (Press <space> to select, <a> to toggle all, <i> to invert selection) · esbuild
 ✔ The next packages will now be built: esbuild.
 Do you approve? (y/N) · true
 node_modules/.pnpm/esbuild@0.27.2/node_modules/esbuild: Running postinstall script, done in 85ms
-```
-
-- 安装 Vue 的插件 vue-router、axios、pania
-```
-root@25773b67f169:/app# pnpm add vue-router@4 axios pinia
-
-Packages: +30
-++++++++++++++++++++++++++++++
-Progress: resolved 229, reused 153, downloaded 30, added 30, done
-
-dependencies:
-+ axios 1.13.2
-+ pinia 3.0.4
-+ vue-router 4.6.4
-
-Done in 6s using pnpm v10.26.0
+...
 
 root@25773b67f169:/app# exit
+
 ```
-### 退出容器
+### 关闭容器
 
 ```
 cd project
