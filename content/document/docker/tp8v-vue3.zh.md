@@ -311,7 +311,7 @@ docker compose --profile dev up
 ```
 > 启动之后，保持容器运行，另外新开一个终端，在新的终端里执行以下步骤。   
 
-- 查看容器
+### 查看容器
 ```
 cd project
 docker compose ps
@@ -322,7 +322,7 @@ vue-dev-server    node:22.20-custom       "docker-entrypoint.s…"   vue3-dev   
 vue-prod-server   httpd:2.4               "httpd-foreground"       vue3-prod   3 minutes ago   Up 3 minutes   0.0.0.0:80->80/tcp, [::]:80->80/tcp
 ```
 
-- 安装 ThinkPHP
+### 安装 ThinkPHP
 ```
 cd project
 docker compose exec tp8 bash
@@ -346,7 +346,7 @@ Succeed!
 root@a0f20d842dd2:/var/www/html# exit
 ```
 
-- 安装 Vue
+### 安装 Vue
 ```
 cd project
 docker compose exec vue3-dev bash
