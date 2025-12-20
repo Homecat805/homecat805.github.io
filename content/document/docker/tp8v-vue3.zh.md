@@ -39,7 +39,8 @@ project
 
 ### Vue 生产环境配置文件
 
-docker/apache/httpd.conf
+配置文件：docker/apache/httpd.conf 用于配置 vue3-prod 服务。
+
 ```
 ServerRoot "/usr/local/apache2"
 Listen 80
@@ -131,27 +132,21 @@ LogLevel warn
 
 ### Node 重写镜像文件
 
-docker/node/Dockerfile
+镜像文件：docker/node/Dockerfile 用于重写 node:22.20 镜像，安装插件及工具。
 ```
 FROM node:22.20
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-# 1. 先换源
+# 换源
 RUN sed -i 's|http://deb.debian.org/debian|http://mirrors.aliyun.com/debian|g' /etc/apt/sources.list.d/debian.sources && \
     sed -i 's|http://deb.debian.org/debian-security|http://mirrors.aliyun.com/debian-security|g' /etc/apt/sources.list.d/debian.sources
 
-# 2. 仅更新，看看能否成功
-RUN apt-get update
-
-# 3. 再安装
-RUN apt-get install -y xdg-utils
-
-# 4. 升级和清理
-RUN apt-get upgrade -y && apt-get autoremove -y
-
-# 5. 清理缓存
-RUN rm -rf /var/lib/apt/lists/*
+# 更新及安装
+RUN apt-get update && \
+    apt-get install -y xdg-utils && \
+    apt-get upgrade -y && apt-get autoremove -y && \
+    rm -rf /var/lib/apt/lists/*
 
 # 6. 安装Node工具
 RUN npm install -g npm@11.7.0 && npm install -g pnpm
@@ -161,7 +156,7 @@ WORKDIR /app
 
 ### PHP 镜像重写文件
 
-docker/php/Dockerfile
+镜像文件：docker/php/Dockerfile 用于重写 php:8.0-apache 镜像，安装插件及工具。
 ```
 FROM php:8.0-apache
 
@@ -210,7 +205,7 @@ EXPOSE 80
 
 ### PHP 配置文件
 
-docker/php/000-default.conf
+配置文件：docker/php/000-default.conf 用户配置 tp8 服务。
 ```
 <VirtualHost *:80>
   ServerAdmin webmaster@localhost
@@ -227,9 +222,9 @@ docker/php/000-default.conf
 </VirtualHost>
 ```
 
-### 容器文件
+### Docker 文件
 
-docker-compose.yaml
+容器文件：docker-compose.yaml 用于容器管理。
 ```
 services:
   # PHP + Apache 服务名 tp8
@@ -304,19 +299,17 @@ networks:
 cd project
 docker compose --profile dev up
 
-[+] up 4/4
-✔ Network project_app_net   Created      0.2s 
-✔ Container tp8-server      Created      1.4s 
-✔ Container vue-prod-server Created      1.4s 
-✔ Container vue-dev-server  Created      1.4s 
-Attaching to tp8-server, vue-dev-server, vue-prod-server
-tp8-server  | AH00112: Warning: DocumentRoot [/var/www/html/public] does not exist
+[+] Running 6/6
+ ✔ node:22.20-custom          Built  
+ ✔ php:8.0-apache-custom      Built   
+ ✔ Network mytest_app_net     Created
+ ✔ Container tp8-server       Created
+ ✔ Container vue-dev-server   Created
+ ✔ Container vue-prod-server  Created
 ...
 
-w Enable Watch   d Detach
 ```
-选择 Detach 按 <kbd>d</kdb>
-在测试过程中，遇到过没有出现 d Detach 选择项的情况，处理办法为：另外新开一个终端，在新的终端里执行以下步骤。   
+> 启动之后，保持容器运行，另外新开一个终端，在新的终端里执行以下步骤。   
 
 - 查看容器
 ```
@@ -437,150 +430,6 @@ Done in 6s using pnpm v10.26.0
 
 root@25773b67f169:/app# exit
 ```
-
-### 启动容器
-
-```
-docker compose --profile dev up
-
-[+] up 4/4
-✔ Network project_app_net   Created      0.2s 
-✔ Container tp8-server      Created      1.4s 
-✔ Container vue-prod-server Created      1.4s 
-✔ Container vue-dev-server  Created      1.4s 
-Attaching to tp8-server, vue-dev-server, vue-prod-server
-tp8-server  | AH00112: Warning: DocumentRoot [/var/www/html/public] does not exist
-...
-
-w Enable Watch   d Detach
-```
-选择 Detach 按 <kbd>d</kdb>
-
-### 查看容器
-
-```
-docker compose ps
-
-NAME              IMAGE                   COMMAND                  SERVICE     CREATED         STATUS         PORTS
-tp8-server        php:8.0-apache-custom   "docker-php-entrypoi…"   tp8         3 minutes ago   Up 3 minutes   0.0.0.0:8000->80/tcp, [::]:8000->80/tcp
-vue-dev-server    node:22.20-custom       "docker-entrypoint.s…"   vue3-dev    3 minutes ago   Up 3 minutes   0.0.0.0:5173->5173/tcp, [::]:5173->5173/tcp
-vue-prod-server   httpd:2.4               "httpd-foreground"       vue3-prod   3 minutes ago   Up 3 minutes   0.0.0.0:80->80/tcp, [::]:80->80/tcp
-```
-
-### 安装 ThinkPHP
-
-```
-cd project
-docker compose exec tp8 bash
-root@a0f20d842dd2:/var/www/html# composer create-project topthink/think . 
-
-Creating a "topthink/think" project at "./"
-Installing topthink/think (v8.1.3)
-  - Downloading topthink/think (v8.1.3)
-  - Installing topthink/think (v8.1.3): Extracting archive
-
-...
-
-14 package suggestions were added by new dependencies, use `composer suggest` to see details.
-Generating autoload files
-> @php think service:discover
-Succeed!
-> @php think vendor:publish
-File /var/www/html/config/trace.php exist!
-Succeed!
-
-...
-
-root@a0f20d842dd2:/var/www/html# exit
-```
-
-### 安装 Vue
-```
-cd project
-docker compose exec vue3-dev bash
-root@25773b67f169:/app# pnpm create vue@latest .
-
-...
-
-┌  Vue.js - The Progressive JavaScript Framework
-◇  Current directory is not empty. Remove existing files and continue
-│  Yes
-◇  Package name:
-│  app
-◇  Select features to include in your project: (↑/↓ to navigate, space to select, a to toggle all, enter to confirm)
-│  TypeScript
-◇  Select experimental features to include in your project: (↑/↓ to navigate, space to select, a to toggle all, enter to confirm)
-│  none
-◇  Skip all example code and start with a blank Vue project?
-│  Yes
-Scaffolding project in /app...
-└  Done. Now run:
-
-  pnpm install
-  pnpm dev
-
-...
-
-root@25773b67f169:/app# pnpm install
-
-...
-
-dependencies:
-+ vue 3.5.26
-
-devDependencies:
-+ @tsconfig/node24 24.0.3
-+ @types/node 24.10.4 (25.0.3 is available)
-+ @vitejs/plugin-vue 6.0.3
-+ @vue/tsconfig 0.8.1
-+ npm-run-all2 8.0.4
-+ typescript 5.9.3
-+ vite 7.3.0
-+ vite-plugin-vue-devtools 8.0.5
-+ vue-tsc 3.1.8
-
-╭ Warning ───────────────────────────────────────────────────────────────────────────────────╮
-│                                                                                            │
-│   Ignored build scripts: esbuild@0.27.2.                                                   │
-│   Run "pnpm approve-builds" to pick which dependencies should be allowed to run scripts.   │
-│                                                                                            │
-╰────────────────────────────────────────────────────────────────────────────────────────────╯
-Done in 48.9s using pnpm v10.26.0
-
-...
-
-root@25773b67f169:/app# pnpm approve-builds
-
-...
-
-✔ Choose which packages to build (Press <space> to select, <a> to toggle all, <i> to invert selection) · esbuild
-✔ The next packages will now be built: esbuild.
-Do you approve? (y/N) · true
-node_modules/.pnpm/esbuild@0.27.2/node_modules/esbuild: Running postinstall script, done in 85ms
-```
-
-### 安装 Vue 的插件
-
-- vue-router
-- axios
-- pinia
-
-```
-root@25773b67f169:/app# pnpm add vue-router@4 axios pinia
-
-Packages: +30
-++++++++++++++++++++++++++++++
-Progress: resolved 229, reused 153, downloaded 30, added 30, done
-
-dependencies:
-+ axios 1.13.2
-+ pinia 3.0.4
-+ vue-router 4.6.4
-
-Done in 6s using pnpm v10.26.0
-
-root@25773b67f169:/app# exit
-```
 ### 退出容器
 
 ```
@@ -588,45 +437,20 @@ cd project
 docker compose --profile dev down
 ```
 
-## 配置
+## 修改及配置
 
 ### 修改目录拥有人
-
 ```
 cd project
 sudo chown -R $(id -u):$(id -g) tp8 vue3
 ```
 ### 修改 tp8 子目录属性
-
 ```
 cd project
 sudo chmod 777 tp8/runtime
 ```
-### tp8 配置
-
-- 复制环境参数文件 
-```
-cd project/tp8
-cp .example.env .env
-```
-- 配置环境文件参数
-```
-APP_DEBUG = true
-
-DB_TYPE = mysql 数据库类型
-DB_HOST = 数据库主机 IP 
-DB_NAME = 数据库名
-DB_USER = 用户名
-DB_PASS = 用户密码
-DB_PORT = 3306
-DB_CHARSET = utf8
-
-DEFAULT_LANG = zh-cn
-```
-
 ### vue3 访问配置
-
-- project/vue3/vite.config.ts
+配置文件: project/vue3/vite.config.ts
 ```
 export default defineConfig({
 ...
